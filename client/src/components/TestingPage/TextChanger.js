@@ -15,7 +15,9 @@ class TextChanger extends React.Component {
   };
 
   handleClick = () => {
-    this.props.fetchText(this.state.inputVal);
+    const { fetchText } = this.props;
+    const { inputVal } = this.state;
+    fetchText(inputVal);
   };
 
   render() {

@@ -1,15 +1,24 @@
 import React from "react";
 import "antd-mobile/dist/antd-mobile.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import TestingPage from "./TestingPage";
-import LandingPage from "./LandingPage";
+import NotFoundPage from "./NotFoundPage";
+import DashboardPage from "./DashBoardPage";
+import AuthPage from "./AuthPage";
 
+const LocationTest = () => <div>location</div>;
+
+// no login info, redirect to login
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={LandingPage} />
+      <Route exact path="/auth" component={AuthPage} />
+      <Route exact path="/dashboard" component={DashboardPage} />
       <Route exact path="/testing" component={TestingPage} />
+      <Route exact path="/:unfoundLocation" component={NotFoundPage} />
+      <Redirect to="/dashboard" />
     </Switch>
   </BrowserRouter>
 );

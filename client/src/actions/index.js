@@ -1,3 +1,3 @@
-import testingAction from "./testingAction";
+import testingAction from "./testing.action";
 
 export { testingAction };

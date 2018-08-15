@@ -11,9 +11,15 @@ export default (state = initialState, action) => {
   const newState = Object.assign({}, state);
   switch (action.type) {
     case constants.LOGIN:
-      newState.isUserAuthenticated = true;
-      newState.user = action.payload.user;
-      newState.error = {};
+      if (action.payload.confirmation) {
+        newState.isUserAuthenticated = true;
+        newState.user = action.payload.user;
+        newState.error = {};
+      } else {
+        newState.isUserAuthenticated = true;
+        newState.user = {};
+        newState.error = action.payload.error;
+      }
       return newState;
     case constants.LOGOUT:
       newState.isUserAuthenticated = false;

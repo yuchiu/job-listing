@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
 import { authAction } from "../../actions";
 import { RegisterForm } from "./presentations";
@@ -16,8 +17,8 @@ class RegisterPage extends React.Component {
     }
   };
 
-  redirectToRegister = () => {
-    this.props.history.push("/register");
+  redirectToLogin = () => {
+    this.props.history.push("/login");
   };
 
   handleChange = e => {
@@ -40,7 +41,7 @@ class RegisterPage extends React.Component {
     }
   };
 
-  handleLogin = e => {
+  handleRegister = e => {
     e.preventDefault();
 
     const {
@@ -62,13 +63,15 @@ class RegisterPage extends React.Component {
 
   render() {
     const { errors, user } = this.state;
+    const { isUserAuthenticated } = this.props;
     return (
       <div className="register-page">
-        <h2 className="register-page__title">Log In</h2>
+        {isUserAuthenticated && <Redirect to="/" />}
+        <h2 className="register-page__title">Register</h2>
         <RegisterForm
-          handleLogin={this.handleLogin}
+          handleRegister={this.handleRegister}
           onChange={this.handleChange}
-          redirectToRegister={this.redirectToRegister}
+          redirectToLogin={this.redirectToLogin}
           errors={errors}
           user={user}
         />
@@ -78,10 +81,13 @@ class RegisterPage extends React.Component {
 }
 RegisterPage.propTypes = {
   history: PropTypes.object.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired
 };
 
-const stateToProps = state => ({});
+const stateToProps = state => ({
+  isUserAuthenticated: state.authReducer.isUserAuthenticated
+});
 
 const dispatchToProps = dispatch => ({
   register: userInfo => {

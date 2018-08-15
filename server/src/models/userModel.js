@@ -4,13 +4,19 @@ const UserSchema = mongoose.Schema({
   firstName: {
     type: String,
     trim: true,
-    maxlength: 100,
+    maxlength: 127,
     default: ""
   },
   lastName: {
     type: String,
     trim: true,
-    maxlength: 100,
+    maxlength: 127,
+    default: ""
+  },
+  username: {
+    type: String,
+    trim: true,
+    maxlength: 127,
     default: ""
   },
   email: {
@@ -18,13 +24,13 @@ const UserSchema = mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    maxlength: 100,
+    maxlength: 127,
     default: ""
   },
   password: {
     type: String,
     minlength: 4,
-    maxlength: 100,
+    maxlength: 127,
     default: ""
   },
   timestamp: {

@@ -1,10 +1,22 @@
 import constants from "../constants";
+import { API } from "../utils";
 
 const authAction = {
-  login: userInfo => dispatch => {
+  register: credential => async dispatch => {
+    const { username, email, password } = credential;
+    const response = await API.registerUser(username, email, password);
     dispatch({
       type: constants.LOGIN,
-      payload: userInfo
+      payload: response
+    });
+  },
+
+  login: credential => async dispatch => {
+    const { email, password } = credential;
+    const response = await API.loginUser(email, password);
+    dispatch({
+      type: constants.LOGIN,
+      payload: response
     });
   },
   logout: () => dispatch => {

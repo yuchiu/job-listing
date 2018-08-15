@@ -34,7 +34,7 @@ class DashboardPage extends React.Component {
             </Button>
           </div>
         )}
-        {!isUserAuthenticated && <Redirect to="/auth" />}
+        {!isUserAuthenticated && <Redirect to="/login" />}
       </div>
     );
   }

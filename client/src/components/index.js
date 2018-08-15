@@ -6,7 +6,8 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import TestingPage from "./TestingPage";
 import NotFoundPage from "./NotFoundPage";
 import DashboardPage from "./DashBoardPage";
-import AuthPage from "./AuthPage";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
 
 const LocationTest = () => <div>location</div>;
 
@@ -14,8 +15,9 @@ const LocationTest = () => <div>location</div>;
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/auth" component={AuthPage} />
-      <Route exact path="/dashboard" component={DashboardPage} />
+      <Route exact path="/" component={DashboardPage} />
+      <Route exact path="/register" component={RegisterPage} />
+      <Route exact path="/login" component={LoginPage} />
       <Route exact path="/testing" component={TestingPage} />
       <Route exact path="/:unfoundLocation" component={NotFoundPage} />
       <Redirect to="/dashboard" />

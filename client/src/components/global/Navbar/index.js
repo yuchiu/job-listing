@@ -8,9 +8,6 @@ class NavBar extends React.Component {
         <Link to="/dashboard">
           <li>Job Hunting</li>
         </Link>
-        <Link to="/auth">
-          <li>auth</li>
-        </Link>
         <Link to="/testing">
           <li>testing</li>
         </Link>

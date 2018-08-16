@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import "./utils/interceptors";
-import "./index.css";
 import store from "./store";
 import Router from "./components";
 import registerServiceWorker from "./registerServiceWorker";

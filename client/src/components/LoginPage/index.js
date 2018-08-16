@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
+import { FormLogo } from "../global";
 import { authAction } from "../../actions";
 import { LoginForm } from "./presentations";
 
@@ -51,6 +52,7 @@ class LoginPage extends React.Component {
     return (
       <div className="login-page">
         {isUserAuthenticated && <Redirect to="/" />}
+        <FormLogo />
         <h2 className="login-page__title">Log In</h2>
         <LoginForm
           handleLogin={this.handleLogin}

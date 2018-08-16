@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button } from "antd-mobile";
+import { Button } from "antd";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { authAction } from "../../actions";
-import { Navbar } from "../global";
-import logo from "../../data/svg/logo.svg";
+import { Navbar, ReactLogo } from "../global";
 import "./index.css";
 
 class DashboardPage extends React.Component {
@@ -23,7 +22,7 @@ class DashboardPage extends React.Component {
           <div className="App">
             <Navbar />
             <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
+              <ReactLogo />
               <h1 className="App-title">Welcome to React</h1>
             </header>
             <p className="App-intro">

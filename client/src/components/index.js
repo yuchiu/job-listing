@@ -8,6 +8,8 @@ import NotFoundPage from "./NotFoundPage";
 import DashboardPage from "./DashBoardPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
+import "../utils/interceptors";
+import "../index.css";
 
 const LocationTest = () => <div>location</div>;
 

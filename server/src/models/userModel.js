@@ -17,7 +17,7 @@ const UserSchema = mongoose.Schema({
     type: String,
     trim: true,
     maxlength: 127,
-    default: ""
+    require: true
   },
   email: {
     type: String,
@@ -25,12 +25,32 @@ const UserSchema = mongoose.Schema({
     trim: true,
     lowercase: true,
     maxlength: 127,
-    default: ""
+    require: true
   },
   password: {
     type: String,
     minlength: 4,
     maxlength: 127,
+    require: true
+  },
+  role: {
+    type: String,
+    minlength: 4,
+    maxlength: 127,
+    require: true
+  },
+  title: {
+    type: String,
+    maxlength: 64,
+    default: ""
+  },
+  desc: {
+    type: String,
+    maxlength: 127,
+    default: ""
+  },
+  avatar: {
+    type: String,
     default: ""
   },
   timestamp: {

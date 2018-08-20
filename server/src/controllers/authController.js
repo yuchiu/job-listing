@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { userModel } from "../models";
 
 const userSummary = user => {
@@ -13,6 +14,12 @@ const userSummary = user => {
 };
 
 const authController = {
+  auth: (req, res) =>
+    // check if user has cookie
+    res.send({
+      confirmation: true,
+      code: 1
+    }),
   register: async (req, res) => {
     try {
       const userInfo = req.body;
@@ -20,22 +27,25 @@ const authController = {
         email: userInfo.email
       });
       if (isUserCreated) {
-        res.json({
+        return res.send({
           confirmation: false,
-          error: "email address is not valid"
+          message: "email address is not valid"
         });
       }
 
+      // hash password & create user
+      userInfo.password = bcrypt.hashSync(userInfo.password, 10);
       const user = await userModel.create(userInfo);
-      res.json({
+      res.send({
         confirmation: true,
         user: userSummary(user)
       });
     } catch (err) {
       console.log(err);
-      res.json({
+
+      return res.send({
         confirmation: false,
-        error: "an error has occured trying to register"
+        message: "an error has occured trying to register"
       });
     }
   },
@@ -48,29 +58,34 @@ const authController = {
 
       // if email is not yet registered
       if (!user) {
-        res.json({
+        return res.send({
           confirmation: false,
-          error: `this email account ${userInfo.email} is not yet registered`
+          message: `this email account ${userInfo.email} is not yet registered`
         });
       }
 
-      // if password is incorrect
-      if (userInfo.password !== user.password) {
-        res.json({
+      // validate password
+      const isPasswordValid = bcrypt.compareSync(
+        userInfo.password,
+        user.password
+      );
+      console.log(isPasswordValid);
+      if (!isPasswordValid) {
+        return res.send({
           confirmation: false,
-          error: "invalid log in information"
+          message: "invalid log in information"
         });
       }
 
       // user is validated
-      res.json({
+      res.send({
         confirmation: true,
         user: userSummary(user)
       });
     } catch (err) {
-      res.json({
+      return res.send({
         confirmation: false,
-        error: "an error has occured trying to login"
+        message: "an error has occured trying to login"
       });
     }
   }

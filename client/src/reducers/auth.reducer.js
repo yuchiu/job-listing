@@ -1,10 +1,11 @@
 import constants from "../constants";
-import { auth } from "../utils";
+import { auth, redirectPath } from "../utils";
 
 const initialState = {
   isUserAuthenticated: false,
+  redirectTo: "",
   user: {},
-  error: {}
+  message: {}
 };
 
 export default (state = initialState, action) => {
@@ -14,17 +15,22 @@ export default (state = initialState, action) => {
       if (action.payload.confirmation) {
         newState.isUserAuthenticated = true;
         newState.user = action.payload.user;
-        newState.error = {};
+        newState.message = {};
+        newState.redirectTo = redirectPath(
+          action.payload.user.role,
+          action.payload.user.avatar
+        );
       } else {
-        newState.isUserAuthenticated = true;
+        newState.isUserAuthenticated = false;
         newState.user = {};
-        newState.error = action.payload.error;
+        newState.message = action.payload.message;
       }
       return newState;
     case constants.LOGOUT:
       newState.isUserAuthenticated = false;
       newState.user = {};
-      newState.error = {};
+      newState.redirectTo = "";
+      newState.message = {};
       return newState;
     default:
       return state;

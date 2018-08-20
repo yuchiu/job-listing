@@ -86,6 +86,11 @@ const RegisterForm = ({
         size="large"
       />
     </Form.Item>
+    <Radio.Group name="role" onChange={onChange}>
+      <Radio value="boss">boss</Radio>
+      <Radio value="genius">genius</Radio>
+    </Radio.Group>
+    <br />
     <Button
       type="primary"
       htmlType="submit"

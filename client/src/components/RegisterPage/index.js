@@ -14,7 +14,8 @@ class RegisterPage extends React.Component {
       username: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      role: ""
     }
   };
 
@@ -23,6 +24,7 @@ class RegisterPage extends React.Component {
   };
 
   handleChange = e => {
+    console.log(this.state.user);
     const { user } = this.state;
     const field = e.target.name;
     user[field] = e.target.value;
@@ -46,17 +48,18 @@ class RegisterPage extends React.Component {
     e.preventDefault();
 
     const {
-      user: { username, email, password, confirmPassword }
+      user: { username, email, password, confirmPassword, role }
     } = this.state;
     const { register } = this.props;
     if (password === confirmPassword) {
-      register({ username, email, password });
+      register({ username, email, password, role });
       this.setState({
         user: {
           username: "",
           email: "",
           password: "",
-          confirmPassword: ""
+          confirmPassword: "",
+          role: ""
         }
       });
     }
@@ -64,10 +67,11 @@ class RegisterPage extends React.Component {
 
   render() {
     const { errors, user } = this.state;
-    const { isUserAuthenticated } = this.props;
+    const { isUserAuthenticated, redirectTo } = this.props;
+    console.log(redirectTo);
     return (
       <div className="register-page">
-        {isUserAuthenticated && <Redirect to="/" />}
+        {redirectTo && <Redirect to={redirectTo} />}
         <FormLogo />
         <h2 className="register-page__title">Register</h2>
         <RegisterForm
@@ -84,11 +88,13 @@ class RegisterPage extends React.Component {
 RegisterPage.propTypes = {
   history: PropTypes.object.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  redirectTo: PropTypes.string
 };
 
 const stateToProps = state => ({
-  isUserAuthenticated: state.authReducer.isUserAuthenticated
+  isUserAuthenticated: state.authReducer.isUserAuthenticated,
+  redirectTo: state.authReducer.redirectTo
 });
 
 const dispatchToProps = dispatch => ({

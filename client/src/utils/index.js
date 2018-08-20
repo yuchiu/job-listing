@@ -1,4 +1,5 @@
 import API from "./API";
 import auth from "./auth";
+import redirectPath from "./redirectPath";
 
-export { API, auth };
+export { API, auth, redirectPath };

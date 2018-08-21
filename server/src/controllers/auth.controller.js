@@ -25,6 +25,7 @@ const userSummary = user => {
     role: user.role,
     title: user.title,
     desc: user.desc,
+    salary: user.salary,
     avatar: user.avatar,
     timestamp: user.timestamp
   };
@@ -32,17 +33,11 @@ const userSummary = user => {
 };
 
 const authController = {
-  auth: (req, res) =>
-    // check if user has cookie
-    res.send({
-      confirmation: true,
-      code: 1
-    }),
   register: async (req, res) => {
     try {
-      const userInfo = req.body;
+      const credential = req.body;
       const isUserCreated = await userModel.findOne({
-        email: userInfo.email
+        email: credential.email
       });
       if (isUserCreated) {
         return res.send({
@@ -52,8 +47,8 @@ const authController = {
       }
 
       // hash password & create user
-      userInfo.password = bcrypt.hashSync(userInfo.password, 10);
-      const user = await userModel.create(userInfo);
+      credential.password = bcrypt.hashSync(credential.password, 10);
+      const user = await userModel.create(credential);
       res.send({
         confirmation: true,
         user: userSummary(user),
@@ -71,22 +66,24 @@ const authController = {
   },
   login: async (req, res) => {
     try {
-      const userInfo = req.body;
+      const credential = req.body;
       const user = await userModel.findOne({
-        email: userInfo.email
+        email: credential.email
       });
 
       // if email is not yet registered
       if (!user) {
         return res.send({
           confirmation: false,
-          message: `this email account ${userInfo.email} is not yet registered`
+          message: `this email account ${
+            credential.email
+          } is not yet registered`
         });
       }
 
       // validate password
       const isPasswordValid = bcrypt.compareSync(
-        userInfo.password,
+        credential.password,
         user.password
       );
       if (!isPasswordValid) {
@@ -97,7 +94,6 @@ const authController = {
       }
 
       // user is validated
-      res.cookie("userid", user._id);
       res.send({
         confirmation: true,
         user: userSummary(user),

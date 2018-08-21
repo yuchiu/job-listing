@@ -49,6 +49,11 @@ const UserSchema = mongoose.Schema({
     maxlength: 127,
     default: ""
   },
+  salary: {
+    type: String,
+    maxlength: 127,
+    default: ""
+  },
   avatar: {
     type: String,
     default: ""

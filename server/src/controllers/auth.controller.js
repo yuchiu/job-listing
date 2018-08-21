@@ -22,6 +22,10 @@ const userSummary = user => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
+    role: user.role,
+    title: user.title,
+    desc: user.desc,
+    avatar: user.avatar,
     timestamp: user.timestamp
   };
   return summary;

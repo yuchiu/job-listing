@@ -5,7 +5,8 @@ const authPolicy = {
     const schema = {
       username: Joi.string().regex(new RegExp("^[a-zA-Z0-9]{4,32}$")),
       email: Joi.string().email(),
-      password: Joi.string().regex(new RegExp("^[a-zA-Z0-9]{4,32}$"))
+      password: Joi.string().regex(new RegExp("^[a-zA-Z0-9]{4,32}$")),
+      role: Joi.string().regex(new RegExp("^[a-zA-Z0-9]{2,32}$"))
     };
     const { error, value } = Joi.validate(req.body, schema);
     if (error) {
@@ -31,6 +32,12 @@ const authPolicy = {
                     <br>
                     2. It must be at least 4 characters and not greater than 32 characters.
                     `
+          });
+          break;
+        case "role":
+          res.send({
+            confirmation: false,
+            error: "role is not valid"
           });
           break;
         default:

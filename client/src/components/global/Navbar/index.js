@@ -4,7 +4,7 @@ import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { authAction } from "../../../actions";
+import { userAction } from "../../../actions";
 
 class NavBar extends React.Component {
   handleClick = () => {
@@ -41,12 +41,12 @@ NavBar.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserAuthenticated: state.authReducer.isUserAuthenticated,
-  user: state.authReducer.user
+  isUserAuthenticated: state.userReducer.isUserAuthenticated,
+  user: state.userReducer.user
 });
 const dispatchToProps = dispatch => ({
   logout: () => {
-    dispatch(authAction.logout());
+    dispatch(userAction.logout());
   }
 });
 

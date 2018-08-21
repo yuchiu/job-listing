@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import { validateForm } from "../../utils";
 import { FormLogo, InlineError, InfoNav } from "../global";
-import { authAction } from "../../actions";
+import { userAction } from "../../actions";
 import { RegisterForm } from "./presentations";
 
 class RegisterPage extends React.Component {
@@ -105,14 +105,14 @@ RegisterPage.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserAuthenticated: state.authReducer.isUserAuthenticated,
-  redirectTo: state.authReducer.redirectTo,
-  message: state.authReducer.message
+  isUserAuthenticated: state.userReducer.isUserAuthenticated,
+  redirectTo: state.userReducer.redirectTo,
+  message: state.userReducer.message
 });
 
 const dispatchToProps = dispatch => ({
   register: credential => {
-    dispatch(authAction.register(credential));
+    dispatch(userAction.register(credential));
   }
 });
 

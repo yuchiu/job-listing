@@ -22,11 +22,10 @@ const API = {
     });
     return payload.data;
   },
-  followupUser: async (credentialFollowUp, user) => {
+  followupUser: async (credentialFollowUp, userId) => {
     const { title, company, salary, desc, avatar } = credentialFollowUp;
-    const { id } = user;
     const payload = await axios.post(`${URL}/user/followup`, {
-      id,
+      userId,
       title,
       company,
       salary,

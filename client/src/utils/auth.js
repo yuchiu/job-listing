@@ -4,8 +4,11 @@ const auth = {
    *
    * @param {string} token
    */
-  authenticateUser: token => {
+  authenticateUser: (token, user) => {
     localStorage.setItem("token", token);
+    localStorage.setItem("userId", user.id);
+    localStorage.setItem("email", user.email);
+    localStorage.setItem("username", user.username);
   },
 
   /**
@@ -21,14 +24,37 @@ const auth = {
    */
   deauthenticateUser: () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("email");
+    localStorage.removeItem("username");
   },
-
   /**
    * Get a token value.
    *
    * @returns {string}
    */
-  getToken: () => localStorage.getItem("token")
+  getToken: () => localStorage.getItem("token"),
+
+  /**
+   * Get email.
+   *
+   * @returns {string}
+   */
+  getEmail: () => localStorage.getItem("email"),
+
+  /**
+   * Get username.
+   *
+   * @returns {string}
+   */
+  getUsername: () => localStorage.getItem("username"),
+
+  /**
+   * Get username.
+   *
+   * @returns {string}
+   */
+  getUserId: () => localStorage.getItem("userId")
 };
 
 export default auth;

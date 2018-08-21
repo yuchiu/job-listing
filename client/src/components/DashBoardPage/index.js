@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { authAction } from "../../actions";
+import { userAction } from "../../actions";
 import { Navbar, ReactLogo } from "../global";
 import "./index.css";
 
@@ -35,12 +35,12 @@ DashboardPage.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserAuthenticated: state.authReducer.isUserAuthenticated,
-  user: state.authReducer.user
+  isUserAuthenticated: state.userReducer.isUserAuthenticated,
+  user: state.userReducer.user
 });
 const dispatchToProps = dispatch => ({
   logout: () => {
-    dispatch(authAction.logout());
+    dispatch(userAction.logout());
   }
 });
 

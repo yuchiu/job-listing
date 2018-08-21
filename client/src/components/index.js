@@ -8,8 +8,8 @@ import NotFoundPage from "./NotFoundPage";
 import DashboardPage from "./DashBoardPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
-import BossInfoPage from "./BossInfoPage";
-import GeniusInfoPage from "./GeniusInfoPage";
+import BossFollowUpPage from "./BossFollowUpPage";
+import GeniusFollowUpPage from "./GeniusFollowUpPage";
 import "../utils/interceptors";
 import "../index.css";
 
@@ -33,8 +33,16 @@ const Router = () => (
       <AuthenticatedRoute exact path="/" component={DashboardPage} />
       <Route exact path="/register" component={RegisterPage} />
       <Route exact path="/login" component={LoginPage} />
-      <AuthenticatedRoute exact path="/bossinfo" component={BossInfoPage} />
-      <AuthenticatedRoute exact path="/geniusinfo" component={GeniusInfoPage} />
+      <AuthenticatedRoute
+        exact
+        path="/bossfollowup"
+        component={BossFollowUpPage}
+      />
+      <AuthenticatedRoute
+        exact
+        path="/geniusfollowup"
+        component={GeniusFollowUpPage}
+      />
       <AuthenticatedRoute exact path="/testing" component={TestingPage} />
       <Route exact path="/:unfoundLocation" component={NotFoundPage} />
     </Switch>

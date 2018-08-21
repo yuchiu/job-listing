@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import { validateForm } from "../../utils";
 import { FormLogo, InlineError, InfoNav } from "../global";
-import { authAction } from "../../actions";
+import { userAction } from "../../actions";
 import { LoginForm } from "./presentations";
 
 class LoginPage extends React.Component {
@@ -88,14 +88,14 @@ LoginPage.propTypes = {
 };
 
 const stateToProps = state => ({
-  isUserAuthenticated: state.authReducer.isUserAuthenticated,
-  redirectTo: state.authReducer.redirectTo,
-  message: state.authReducer.message
+  isUserAuthenticated: state.userReducer.isUserAuthenticated,
+  redirectTo: state.userReducer.redirectTo,
+  message: state.userReducer.message
 });
 
 const dispatchToProps = dispatch => ({
   login: credential => {
-    dispatch(authAction.login(credential));
+    dispatch(userAction.login(credential));
   }
 });
 

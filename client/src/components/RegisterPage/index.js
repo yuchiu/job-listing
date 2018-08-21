@@ -16,17 +16,20 @@ class RegisterPage extends React.Component {
       email: "",
       password: "",
       confirmPassword: "",
-      role: ""
+      role: "genius"
     }
   };
 
-  componentDidUpdate() {
+  componentWillUnmount() {
     const { isUserAuthenticated } = this.props;
     if (isUserAuthenticated) {
       this.setState({
         user: {
+          username: "",
           email: "",
-          password: ""
+          password: "",
+          confirmPassword: "",
+          role: "genius"
         }
       });
     }
@@ -41,7 +44,6 @@ class RegisterPage extends React.Component {
     const { user } = this.state;
     const field = e.target.name;
     user[field] = e.target.value;
-
     this.setState({
       user
     });
@@ -79,7 +81,7 @@ class RegisterPage extends React.Component {
     const { isUserAuthenticated, redirectTo, message } = this.props;
     return (
       <div className="register-page">
-        {isUserAuthenticated && <Redirect to={redirectTo} />}
+        {redirectTo && <Redirect to={redirectTo} />}
         <FormLogo />
         <h2 className="register-page__title">Register</h2>
         <RegisterForm
@@ -90,7 +92,7 @@ class RegisterPage extends React.Component {
           user={user}
         />
         <br />
-        <InlineError text={message} />
+        {message && <InlineError text={message} />}
       </div>
     );
   }

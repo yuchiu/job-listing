@@ -4,7 +4,8 @@ const getRedirectPath = (role, avatar) => {
   let path = "";
   if (role === "boss" || role === "genius") {
     path = `/${role}`;
-    if (avatar) {
+    // eslint-disable-next-line
+    if (avatar === "") {
       path += "info";
     }
   }

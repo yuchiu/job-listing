@@ -3,11 +3,12 @@ import axios from "axios";
 const URL = "http://localhost:3200";
 
 const API = {
-  registerUser: async (username, email, password) => {
+  registerUser: async (username, email, password, role) => {
     const payload = await axios.post(`${URL}/auth/register`, {
       username,
       email,
-      password
+      password,
+      role
     });
     return payload.data;
   },

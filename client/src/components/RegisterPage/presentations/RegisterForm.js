@@ -74,9 +74,11 @@ const RegisterForm = ({
         size="large"
       />
     </Form.Item>
-    <Radio.Group name="role" onChange={onChange}>
+    <Radio.Group name="role" onChange={onChange} defaultValue="genius">
       <Radio value="boss">boss</Radio>
-      <Radio value="genius">genius</Radio>
+      <Radio value="genius" defaultChecked={true}>
+        genius
+      </Radio>
     </Radio.Group>
     <br />
     <Button

@@ -17,7 +17,7 @@ class LoginPage extends React.Component {
     }
   };
 
-  componentDidUpdate() {
+  componentWillUnmount() {
     const { isUserAuthenticated } = this.props;
     if (isUserAuthenticated) {
       this.setState({
@@ -65,7 +65,7 @@ class LoginPage extends React.Component {
     const { isUserAuthenticated, redirectTo, message } = this.props;
     return (
       <div className="login-page">
-        {isUserAuthenticated && <Redirect to={redirectTo} />}
+        {redirectTo && <Redirect to={redirectTo} />}
         <FormLogo />
         <h2 className="login-page__title">Log In</h2>
         <LoginForm

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import { validateForm } from "../../utils";
-import { FormLogo, InlineError } from "../global";
+import { FormLogo, InlineError, InfoNav } from "../global";
 import { authAction } from "../../actions";
 import { LoginForm } from "./presentations";
 
@@ -18,15 +18,12 @@ class LoginPage extends React.Component {
   };
 
   componentWillUnmount() {
-    const { isUserAuthenticated } = this.props;
-    if (isUserAuthenticated) {
-      this.setState({
-        user: {
-          email: "",
-          password: ""
-        }
-      });
-    }
+    this.setState({
+      user: {
+        email: "",
+        password: ""
+      }
+    });
   }
 
   redirectToRegister = () => {
@@ -66,6 +63,7 @@ class LoginPage extends React.Component {
     return (
       <div className="login-page">
         {redirectTo && <Redirect to={redirectTo} />}
+        <InfoNav name="there" text=" " />
         <FormLogo />
         <h2 className="login-page__title">Log In</h2>
         <LoginForm

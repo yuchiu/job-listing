@@ -1,0 +1,11 @@
+.info-nav-header {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+.info-nav-header span {
+  color: #ccc;
+}
+.info-nav-header .info-nav-header__name {
+  color: rgb(116, 178, 199);
+}

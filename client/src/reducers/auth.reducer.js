@@ -13,21 +13,23 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.LOGIN:
       if (action.payload.confirmation) {
-        newState.isUserAuthenticated = true;
+        auth.authenticateUser(action.payload.token);
+        newState.isUserAuthenticated = auth.isUserAuthenticated();
         newState.user = action.payload.user;
-        newState.message = {};
+        newState.message = action.payload.message;
         newState.redirectTo = redirectPath(
           action.payload.user.role,
           action.payload.user.avatar
         );
       } else {
-        newState.isUserAuthenticated = false;
+        newState.isUserAuthenticated = auth.isUserAuthenticated();
         newState.user = {};
         newState.message = action.payload.message;
       }
       return newState;
     case constants.LOGOUT:
-      newState.isUserAuthenticated = false;
+      auth.deauthenticateUser();
+      newState.isUserAuthenticated = auth.isUserAuthenticated();
       newState.user = {};
       newState.redirectTo = "";
       newState.message = {};

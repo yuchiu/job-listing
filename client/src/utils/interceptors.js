@@ -4,7 +4,9 @@ import { Toast } from "antd-mobile";
 
 // intercept request
 axios.interceptors.request.use(config => {
-  Toast.loading("loading", 0);
+  Toast.loading("loading", 3, () => {
+    console.log("Load complete !!!");
+  });
   return config;
 });
 

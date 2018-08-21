@@ -17,7 +17,8 @@ class LoginPage extends React.Component {
   };
 
   redirectToRegister = () => {
-    this.props.history.push("/register");
+    const { history } = this.props;
+    history.push("/register");
   };
 
   handleChange = e => {
@@ -48,10 +49,10 @@ class LoginPage extends React.Component {
 
   render() {
     const { errors, user } = this.state;
-    const { isUserAuthenticated } = this.props;
+    const { isUserAuthenticated, redirectTo } = this.props;
     return (
       <div className="login-page">
-        {isUserAuthenticated && <Redirect to="/" />}
+        {isUserAuthenticated && <Redirect to={redirectTo} />}
         <FormLogo />
         <h2 className="login-page__title">Log In</h2>
         <LoginForm
@@ -68,11 +69,13 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
-  isUserAuthenticated: PropTypes.bool.isRequired
+  isUserAuthenticated: PropTypes.bool.isRequired,
+  redirectTo: PropTypes.string
 };
 
 const stateToProps = state => ({
-  isUserAuthenticated: state.authReducer.isUserAuthenticated
+  isUserAuthenticated: state.authReducer.isUserAuthenticated,
+  redirectTo: state.authReducer.redirectTo
 });
 
 const dispatchToProps = dispatch => ({

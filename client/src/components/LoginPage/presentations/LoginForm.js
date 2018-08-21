@@ -59,7 +59,6 @@ LoginForm.propTypes = {
   handleLogin: PropTypes.func.isRequired,
   redirectToRegister: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired
 };

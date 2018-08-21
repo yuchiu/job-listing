@@ -5,7 +5,7 @@ const initialState = {
   isUserAuthenticated: false,
   redirectTo: "",
   user: {},
-  message: {}
+  message: ""
 };
 
 export default (state = initialState, action) => {
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
       newState.isUserAuthenticated = auth.isUserAuthenticated();
       newState.user = {};
       newState.redirectTo = "";
-      newState.message = {};
+      newState.message = "";
       return newState;
     default:
       return state;

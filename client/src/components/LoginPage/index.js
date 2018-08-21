@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import { validateForm } from "../../utils";
-import { FormLogo } from "../global";
+import { FormLogo, InlineError } from "../global";
 import { authAction } from "../../actions";
 import { LoginForm } from "./presentations";
 
@@ -16,6 +16,18 @@ class LoginPage extends React.Component {
       password: ""
     }
   };
+
+  componentDidUpdate() {
+    const { isUserAuthenticated } = this.props;
+    if (isUserAuthenticated) {
+      this.setState({
+        user: {
+          email: "",
+          password: ""
+        }
+      });
+    }
+  }
 
   redirectToRegister = () => {
     const { history } = this.props;
@@ -45,18 +57,12 @@ class LoginPage extends React.Component {
     if (Object.keys(clientErrors).length === 0) {
       const { login } = this.props;
       login({ email, password });
-      this.setState({
-        user: {
-          email: "",
-          password: ""
-        }
-      });
     }
   };
 
   render() {
     const { clientErrors, user } = this.state;
-    const { isUserAuthenticated, redirectTo } = this.props;
+    const { isUserAuthenticated, redirectTo, message } = this.props;
     return (
       <div className="login-page">
         {isUserAuthenticated && <Redirect to={redirectTo} />}
@@ -69,6 +75,8 @@ class LoginPage extends React.Component {
           clientErrors={clientErrors}
           user={user}
         />
+        <br />
+        {message && <InlineError text={message} />}
       </div>
     );
   }
@@ -77,12 +85,14 @@ LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  redirectTo: PropTypes.string
+  redirectTo: PropTypes.string,
+  message: PropTypes.string
 };
 
 const stateToProps = state => ({
   isUserAuthenticated: state.authReducer.isUserAuthenticated,
-  redirectTo: state.authReducer.redirectTo
+  redirectTo: state.authReducer.redirectTo,
+  message: state.authReducer.message
 });
 
 const dispatchToProps = dispatch => ({

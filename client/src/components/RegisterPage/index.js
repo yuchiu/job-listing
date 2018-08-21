@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import { validateForm } from "../../utils";
-import { FormLogo } from "../global";
+import { FormLogo, InlineError } from "../global";
 import { authAction } from "../../actions";
 import { RegisterForm } from "./presentations";
 
@@ -19,6 +19,18 @@ class RegisterPage extends React.Component {
       role: ""
     }
   };
+
+  componentDidUpdate() {
+    const { isUserAuthenticated } = this.props;
+    if (isUserAuthenticated) {
+      this.setState({
+        user: {
+          email: "",
+          password: ""
+        }
+      });
+    }
+  }
 
   redirectToLogin = () => {
     const { history } = this.props;
@@ -58,22 +70,13 @@ class RegisterPage extends React.Component {
       this.setState({ clientErrors });
       if (Object.keys(clientErrors).length === 0) {
         register({ username, email, password, role });
-        this.setState({
-          user: {
-            username: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-            role: ""
-          }
-        });
       }
     }
   };
 
   render() {
     const { user, clientErrors } = this.state;
-    const { isUserAuthenticated, redirectTo } = this.props;
+    const { isUserAuthenticated, redirectTo, message } = this.props;
     return (
       <div className="register-page">
         {isUserAuthenticated && <Redirect to={redirectTo} />}
@@ -86,6 +89,8 @@ class RegisterPage extends React.Component {
           clientErrors={clientErrors}
           user={user}
         />
+        <br />
+        <InlineError text={message} />
       </div>
     );
   }
@@ -94,7 +99,8 @@ RegisterPage.propTypes = {
   history: PropTypes.object.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   register: PropTypes.func.isRequired,
-  redirectTo: PropTypes.string
+  redirectTo: PropTypes.string,
+  message: PropTypes.string
 };
 
 const stateToProps = state => ({

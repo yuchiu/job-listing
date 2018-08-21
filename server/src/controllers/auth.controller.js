@@ -53,7 +53,8 @@ const authController = {
       res.send({
         confirmation: true,
         user: userSummary(user),
-        token: jwtSignUser(user)
+        token: jwtSignUser(user),
+        message: "registered successfully"
       });
     } catch (err) {
       console.log(err);
@@ -96,7 +97,8 @@ const authController = {
       res.send({
         confirmation: true,
         user: userSummary(user),
-        token: jwtSignUser(user)
+        token: jwtSignUser(user),
+        message: "sign in successfully"
       });
     } catch (err) {
       return res.send({

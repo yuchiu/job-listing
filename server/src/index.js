@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import config from "../config";
 
@@ -28,7 +27,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(cookieParser());
 app.use(bodyParser.json());
 routes(app);
 

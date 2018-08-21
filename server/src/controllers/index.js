@@ -1,4 +1,4 @@
-import testController from "./testController";
-import authController from "./authController";
+import testController from "./test.controller";
+import authController from "./auth.controller";
 
 export { authController, testController };

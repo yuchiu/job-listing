@@ -1,6 +1,20 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { userModel } from "../models";
 
+import config from "../../config";
+
+const jwtSignUser = user => {
+  try {
+    const userJson = user.toJSON();
+    const ONE_WEEK = 60 * 60 * 24 * 7;
+    return jwt.sign(userJson, config.JWT_SECRET, {
+      expiresIn: ONE_WEEK
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 const userSummary = user => {
   const summary = {
     id: user._id.toString(),
@@ -38,7 +52,8 @@ const authController = {
       const user = await userModel.create(userInfo);
       res.send({
         confirmation: true,
-        user: userSummary(user)
+        user: userSummary(user),
+        token: jwtSignUser(user)
       });
     } catch (err) {
       console.log(err);
@@ -69,7 +84,6 @@ const authController = {
         userInfo.password,
         user.password
       );
-      console.log(isPasswordValid);
       if (!isPasswordValid) {
         return res.send({
           confirmation: false,
@@ -78,9 +92,11 @@ const authController = {
       }
 
       // user is validated
+      res.cookie("userid", user._id);
       res.send({
         confirmation: true,
-        user: userSummary(user)
+        user: userSummary(user),
+        token: jwtSignUser(user)
       });
     } catch (err) {
       return res.send({

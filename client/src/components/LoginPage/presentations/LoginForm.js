@@ -2,21 +2,19 @@ import React from "react";
 import { Form, Icon, Input, Button } from "antd";
 import PropTypes from "prop-types";
 
+import { InlineError } from "../../global";
+
 const LoginForm = ({
   handleLogin,
   onChange,
   redirectToRegister,
-  errors,
+  clientErrors,
   user
 }) => (
   <Form className="login-form">
-    {errors.summary && (
-      <div className="row">
-        <p className="error-message">{errors.summary}</p>
-      </div>
-    )}
     <Form.Item>
       <label htmlFor="email">Email</label>
+      {clientErrors.email && <InlineError text={clientErrors.email} />}
       <Input
         prefix={<Icon type="mail" />}
         id="email"
@@ -29,13 +27,9 @@ const LoginForm = ({
         size="large"
       />
     </Form.Item>
-    {errors.email && (
-      <div className="row">
-        <p className="error-message">{errors.email}</p>
-      </div>
-    )}
     <Form.Item>
       <label htmlFor="password">Password</label>
+      {clientErrors.password && <InlineError text={clientErrors.password} />}
       <Input
         prefix={<Icon type="lock" />}
         id="password"
@@ -48,11 +42,6 @@ const LoginForm = ({
         size="large"
       />
     </Form.Item>
-    {errors.password && (
-      <div className="row">
-        <p className="error-message">{errors.password}</p>
-      </div>
-    )}
     <Button
       type="primary"
       htmlType="submit"
@@ -71,7 +60,8 @@ LoginForm.propTypes = {
   redirectToRegister: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  clientErrors: PropTypes.object.isRequired
 };
 
 export default LoginForm;

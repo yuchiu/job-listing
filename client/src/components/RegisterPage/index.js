@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
+import { validateForm } from "../../utils";
 import { FormLogo } from "../global";
 import { authAction } from "../../actions";
 import { RegisterForm } from "./presentations";
 
 class RegisterPage extends React.Component {
   state = {
-    errors: {},
+    clientErrors: {},
     user: {
       username: "",
       email: "",
@@ -25,7 +26,6 @@ class RegisterPage extends React.Component {
   };
 
   handleChange = e => {
-    console.log(this.state.user);
     const { user } = this.state;
     const field = e.target.name;
     user[field] = e.target.value;
@@ -35,13 +35,14 @@ class RegisterPage extends React.Component {
     });
 
     if (user.password !== user.confirmPassword) {
-      const { errors } = this.state;
-      errors.password = "Password and Confirm Password don't match.";
-      this.setState({ errors });
+      const { clientErrors } = this.state;
+      clientErrors.confirmPassword =
+        "Password and Confirm Password don't match.";
+      this.setState({ clientErrors });
     } else {
-      const { errors } = this.state;
-      errors.password = "";
-      this.setState({ errors });
+      const { clientErrors } = this.state;
+      clientErrors.confirmPassword = "";
+      this.setState({ clientErrors });
     }
   };
 
@@ -53,23 +54,26 @@ class RegisterPage extends React.Component {
     } = this.state;
     const { register } = this.props;
     if (password === confirmPassword) {
-      register({ username, email, password, role });
-      this.setState({
-        user: {
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          role: ""
-        }
-      });
+      const clientErrors = validateForm.signUp(this.state.user);
+      this.setState({ clientErrors });
+      if (Object.keys(clientErrors).length === 0) {
+        register({ username, email, password, role });
+        this.setState({
+          user: {
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            role: ""
+          }
+        });
+      }
     }
   };
 
   render() {
-    const { errors, user } = this.state;
+    const { user, clientErrors } = this.state;
     const { isUserAuthenticated, redirectTo } = this.props;
-    console.log(redirectTo);
     return (
       <div className="register-page">
         {isUserAuthenticated && <Redirect to={redirectTo} />}
@@ -79,7 +83,7 @@ class RegisterPage extends React.Component {
           handleRegister={this.handleRegister}
           onChange={this.handleChange}
           redirectToLogin={this.redirectToLogin}
-          errors={errors}
+          clientErrors={clientErrors}
           user={user}
         />
       </div>

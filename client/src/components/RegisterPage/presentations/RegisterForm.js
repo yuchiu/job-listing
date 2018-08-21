@@ -2,21 +2,19 @@ import React from "react";
 import { Form, Icon, Input, Radio, Button } from "antd";
 import PropTypes from "prop-types";
 
+import { InlineError } from "../../global";
+
 const RegisterForm = ({
   handleRegister,
   onChange,
   redirectToLogin,
-  errors,
+  clientErrors,
   user
 }) => (
   <Form className="register-form">
-    {errors.summary && (
-      <div className="row">
-        <p className="error-message">{errors.summary}</p>
-      </div>
-    )}
     <Form.Item>
       <label htmlFor="username">Username</label>
+      {clientErrors.username && <InlineError text={clientErrors.username} />}
       <Input
         prefix={<Icon type="user" />}
         id="username"
@@ -29,13 +27,9 @@ const RegisterForm = ({
         size="large"
       />
     </Form.Item>
-    {errors.username && (
-      <div className="row">
-        <p className="error-message">{errors.username}</p>
-      </div>
-    )}
     <Form.Item>
       <label htmlFor="email">Email</label>
+      {clientErrors.email && <InlineError text={clientErrors.email} />}
       <Input
         prefix={<Icon type="mail" />}
         id="email"
@@ -48,13 +42,9 @@ const RegisterForm = ({
         size="large"
       />
     </Form.Item>
-    {errors.email && (
-      <div className="row">
-        <p className="error-message">{errors.email}</p>
-      </div>
-    )}
     <Form.Item>
       <label htmlFor="password">Password</label>
+      {clientErrors.password && <InlineError text={clientErrors.password} />}
       <Input
         prefix={<Icon type="lock" />}
         id="password"
@@ -67,13 +57,11 @@ const RegisterForm = ({
         size="large"
       />
     </Form.Item>
-    {errors.password && (
-      <div className="row">
-        <p className="error-message">{errors.password}</p>
-      </div>
-    )}
     <Form.Item>
       <label htmlFor="confirm_password">Confirm Password</label>
+      {clientErrors.confirmPassword && (
+        <InlineError text={clientErrors.confirmPassword} />
+      )}
       <Input
         prefix={<Icon type="lock" />}
         id="confirm_password"
@@ -108,8 +96,8 @@ RegisterForm.propTypes = {
   handleRegister: PropTypes.func.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  clientErrors: PropTypes.object.isRequired
 };
 
 export default RegisterForm;

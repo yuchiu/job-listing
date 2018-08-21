@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
+import { validateForm } from "../../utils";
 import { FormLogo } from "../global";
 import { authAction } from "../../actions";
 import { LoginForm } from "./presentations";
 
 class LoginPage extends React.Component {
   state = {
-    errors: {},
+    clientErrors: {},
     user: {
       email: "",
       password: ""
@@ -35,20 +36,26 @@ class LoginPage extends React.Component {
     e.preventDefault();
 
     const {
+      user,
       user: { email, password }
     } = this.state;
-    const { login } = this.props;
-    login({ email, password });
-    this.setState({
-      user: {
-        email: "",
-        password: ""
-      }
-    });
+
+    const clientErrors = validateForm.signIn(user);
+    this.setState({ clientErrors });
+    if (Object.keys(clientErrors).length === 0) {
+      const { login } = this.props;
+      login({ email, password });
+      this.setState({
+        user: {
+          email: "",
+          password: ""
+        }
+      });
+    }
   };
 
   render() {
-    const { errors, user } = this.state;
+    const { clientErrors, user } = this.state;
     const { isUserAuthenticated, redirectTo } = this.props;
     return (
       <div className="login-page">
@@ -59,7 +66,7 @@ class LoginPage extends React.Component {
           handleLogin={this.handleLogin}
           onChange={this.handleChange}
           redirectToRegister={this.redirectToRegister}
-          errors={errors}
+          clientErrors={clientErrors}
           user={user}
         />
       </div>

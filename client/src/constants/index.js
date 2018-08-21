@@ -1,5 +1,6 @@
 export default {
   FETCH_TEXT: "FETCH_TEXT",
   LOGIN: "LOGIN",
-  LOGOUT: "LOGOUT"
+  LOGOUT: "LOGOUT",
+  FOLLOWUP_USER: "FOLLOWUP_USER"
 };

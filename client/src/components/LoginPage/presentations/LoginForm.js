@@ -9,7 +9,7 @@ const LoginForm = ({
   onChange,
   redirectToRegister,
   clientErrors,
-  user
+  credential
 }) => (
   <Form className="login-form">
     <Form.Item>
@@ -20,7 +20,7 @@ const LoginForm = ({
         id="email"
         type="email"
         name="email"
-        value={user.email}
+        value={credential.email}
         className=""
         onChange={onChange}
         placeholder="email"
@@ -35,7 +35,7 @@ const LoginForm = ({
         id="password"
         type="password"
         name="password"
-        value={user.password}
+        value={credential.password}
         className="validate"
         onChange={onChange}
         placeholder="password"
@@ -59,7 +59,7 @@ LoginForm.propTypes = {
   handleLogin: PropTypes.func.isRequired,
   redirectToRegister: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  credential: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired
 };
 

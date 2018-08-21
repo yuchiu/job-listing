@@ -2,51 +2,50 @@ import React from "react";
 import { Input, Button } from "antd";
 import PropTypes from "prop-types";
 
-const AvatarSelector = () => <div>avatar selector</div>;
+import { AvatarSelector } from "../../global";
 
-const FollowUpForm = ({ selectAvatar, handleChange, userFollowUpInfo }) => (
+const FollowUpForm = ({
+  selectAvatar,
+  handleChange,
+  credentialFollowUp,
+  handleSubmit
+}) => (
   <div className="info-container">
-    <AvatarSelector />
-    <h2>Please enter the requirements for the hiring position:</h2>
-    <label>Hiring Position</label>
+    <AvatarSelector selectAvatar={selectAvatar} />
+    <h2>Please fill out the requirements for the hiring position:</h2>
+    <label>Hiring Position:</label>
     <Input
       placeholder="hiring position"
       size="large"
       name="title"
-      value={userFollowUpInfo.title}
+      value={credentialFollowUp.title}
       onChange={handleChange}
     />
-    <label>Company</label>
+    <label>Company:</label>
     <Input
       placeholder="company"
       size="large"
       name="company"
-      value={userFollowUpInfo.company}
+      value={credentialFollowUp.company}
       onChange={handleChange}
     />
-    <label>Salary Range</label>
+    <label>Salary Range:</label>
     <Input
       placeholder="salary range"
       size="large"
       name="salary"
-      value={userFollowUpInfo.salary}
+      value={credentialFollowUp.salary}
       onChange={handleChange}
     />
-    <label>Requirements</label>
+    <label>Requirements:</label>
     <Input
       placeholder="requirements"
       autosize={{ minRows: 3 }}
       name="desc"
-      value={userFollowUpInfo.desc}
+      value={credentialFollowUp.desc}
       onChange={handleChange}
     />
-    <Button
-      size="large"
-      className="btn"
-      onClick={() => {
-        console.log(userFollowUpInfo);
-      }}
-    >
+    <Button size="large" className="btn" onClick={handleSubmit}>
       save
     </Button>
   </div>
@@ -55,6 +54,7 @@ const FollowUpForm = ({ selectAvatar, handleChange, userFollowUpInfo }) => (
 FollowUpForm.propTypes = {
   selectAvatar: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  userFollowUpInfo: PropTypes.object.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  credentialFollowUp: PropTypes.object.isRequired
 };
 export default FollowUpForm;

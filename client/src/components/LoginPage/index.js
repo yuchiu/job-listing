@@ -11,7 +11,7 @@ import { LoginForm } from "./presentations";
 class LoginPage extends React.Component {
   state = {
     clientErrors: {},
-    user: {
+    credential: {
       email: "",
       password: ""
     }
@@ -19,7 +19,7 @@ class LoginPage extends React.Component {
 
   componentWillUnmount() {
     this.setState({
-      user: {
+      credential: {
         email: "",
         password: ""
       }
@@ -32,12 +32,12 @@ class LoginPage extends React.Component {
   };
 
   handleChange = e => {
-    const { user } = this.state;
+    const { credential } = this.state;
     const field = e.target.name;
-    user[field] = e.target.value;
+    credential[field] = e.target.value;
 
     this.setState({
-      user
+      credential
     });
   };
 
@@ -45,11 +45,11 @@ class LoginPage extends React.Component {
     e.preventDefault();
 
     const {
-      user,
-      user: { email, password }
+      credential,
+      credential: { email, password }
     } = this.state;
 
-    const clientErrors = validateForm.signIn(user);
+    const clientErrors = validateForm.signIn(credential);
     this.setState({ clientErrors });
     if (Object.keys(clientErrors).length === 0) {
       const { login } = this.props;
@@ -58,7 +58,7 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    const { clientErrors, user } = this.state;
+    const { clientErrors, credential } = this.state;
     const { isUserAuthenticated, redirectTo, message } = this.props;
     return (
       <div className="login-page">
@@ -71,7 +71,7 @@ class LoginPage extends React.Component {
           onChange={this.handleChange}
           redirectToRegister={this.redirectToRegister}
           clientErrors={clientErrors}
-          user={user}
+          credential={credential}
         />
         <br />
         {message && <InlineError text={message} />}
@@ -94,8 +94,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  login: userInfo => {
-    dispatch(authAction.login(userInfo));
+  login: credential => {
+    dispatch(authAction.login(credential));
   }
 });
 

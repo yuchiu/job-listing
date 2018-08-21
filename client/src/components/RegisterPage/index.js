@@ -11,7 +11,7 @@ import { RegisterForm } from "./presentations";
 class RegisterPage extends React.Component {
   state = {
     clientErrors: {},
-    user: {
+    credential: {
       username: "",
       email: "",
       password: "",
@@ -22,7 +22,7 @@ class RegisterPage extends React.Component {
 
   componentWillUnmount() {
     this.setState({
-      user: {
+      credential: {
         username: "",
         email: "",
         password: "",
@@ -38,14 +38,14 @@ class RegisterPage extends React.Component {
   };
 
   handleChange = e => {
-    const { user } = this.state;
+    const { credential } = this.state;
     const field = e.target.name;
-    user[field] = e.target.value;
+    credential[field] = e.target.value;
     this.setState({
-      user
+      credential
     });
 
-    if (user.password !== user.confirmPassword) {
+    if (credential.password !== credential.confirmPassword) {
       const { clientErrors } = this.state;
       clientErrors.confirmPassword =
         "Password and Confirm Password don't match.";
@@ -61,11 +61,12 @@ class RegisterPage extends React.Component {
     e.preventDefault();
 
     const {
-      user: { username, email, password, confirmPassword, role }
+      credential,
+      credential: { username, email, password, confirmPassword, role }
     } = this.state;
     const { register } = this.props;
     if (password === confirmPassword) {
-      const clientErrors = validateForm.signUp(this.state.user);
+      const clientErrors = validateForm.signUp(credential);
       this.setState({ clientErrors });
       if (Object.keys(clientErrors).length === 0) {
         register({ username, email, password, role });
@@ -74,7 +75,7 @@ class RegisterPage extends React.Component {
   };
 
   render() {
-    const { user, clientErrors } = this.state;
+    const { credential, clientErrors } = this.state;
     const { isUserAuthenticated, redirectTo, message } = this.props;
     return (
       <div className="register-page">
@@ -87,7 +88,7 @@ class RegisterPage extends React.Component {
           onChange={this.handleChange}
           redirectToLogin={this.redirectToLogin}
           clientErrors={clientErrors}
-          user={user}
+          credential={credential}
         />
         <br />
         {message && <InlineError text={message} />}
@@ -110,8 +111,8 @@ const stateToProps = state => ({
 });
 
 const dispatchToProps = dispatch => ({
-  register: userInfo => {
-    dispatch(authAction.register(userInfo));
+  register: credential => {
+    dispatch(authAction.register(credential));
   }
 });
 

@@ -2,13 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { userAction } from "../../actions";
 import { InfoNav } from "../global";
 import { FollowUpForm } from "./presentation";
 
 class BossInfoPage extends React.Component {
   state = {
     clientErrors: {},
-    userFollowUpInfo: {
+    credentialFollowUp: {
       title: "",
       company: "",
       salary: "",
@@ -19,7 +20,7 @@ class BossInfoPage extends React.Component {
 
   componentWillUnmount() {
     this.setState({
-      userFollowUpInfo: {
+      credentialFollowUp: {
         title: "",
         company: "",
         salary: "",
@@ -30,26 +31,33 @@ class BossInfoPage extends React.Component {
   }
 
   handleChange = e => {
-    const { userFollowUpInfo } = this.state;
+    const { credentialFollowUp } = this.state;
     const field = e.target.name;
-    userFollowUpInfo[field] = e.target.value;
+    credentialFollowUp[field] = e.target.value;
 
     this.setState({
-      userFollowUpInfo
+      credentialFollowUp
     });
   };
 
   selectAvatar = avatar => {
     this.setState({
-      userFollowUpInfo: {
+      credentialFollowUp: {
         avatar
       }
     });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+    const { credentialFollowUp } = this.state;
+    const { followupUserInfo, user } = this.props;
+    followupUserInfo(credentialFollowUp, user);
+  };
+
   render() {
     const { user } = this.props;
-    const { userFollowUpInfo } = this.state;
+    const { credentialFollowUp } = this.state;
     return (
       <div>
         <InfoNav
@@ -59,19 +67,25 @@ class BossInfoPage extends React.Component {
         <FollowUpForm
           selectAvatar={this.selectAvatar}
           handleChange={this.handleChange}
-          userFollowUpInfo={userFollowUpInfo}
+          credentialFollowUp={credentialFollowUp}
+          handleSubmit={this.handleSubmit}
         />
       </div>
     );
   }
 }
 BossInfoPage.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  followupUserInfo: PropTypes.func.isRequired
 };
 const stateToProps = state => ({
   user: state.authReducer.user
 });
-const dispatchToProps = () => ({});
+const dispatchToProps = dispatch => ({
+  followupUserInfo: (credentialFollowUp, user) => {
+    dispatch(userAction.followupUserInfo(credentialFollowUp, user));
+  }
+});
 
 export default connect(
   stateToProps,

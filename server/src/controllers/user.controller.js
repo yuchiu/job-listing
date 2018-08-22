@@ -20,11 +20,11 @@ const userSummary = user => {
 const userController = {
   followUp: async (req, res) => {
     try {
-      const { credentials } = req.body;
+      const followUpCredentials = req.body;
 
       const user = await userModel.findOneAndUpdate(
-        credentials.id,
-        credentials,
+        followUpCredentials.id,
+        followUpCredentials,
         {
           new: true
         }

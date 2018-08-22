@@ -33,17 +33,9 @@ const userSummary = user => {
 };
 
 const authController = {
-  verifyUser: async (req, res) => {
-    console.log(req.body);
-    res.json({
-      confirmation: true,
-      user: req.body,
-      message: "verified!"
-    });
-  },
   register: async (req, res) => {
     try {
-      const { credentials } = req.body;
+      const credentials = req.body;
       const isUserCreated = await userModel.findOne({
         email: credentials.email
       });
@@ -75,7 +67,7 @@ const authController = {
   },
   login: async (req, res) => {
     try {
-      const { credentials } = req.body;
+      const credentials = req.body;
       const user = await userModel.findOne({
         email: credentials.email
       });

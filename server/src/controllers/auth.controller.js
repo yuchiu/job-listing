@@ -33,22 +33,31 @@ const userSummary = user => {
 };
 
 const authController = {
+  verifyUser: async (req, res) => {
+    console.log(req.body);
+    res.json({
+      confirmation: true,
+      user: req.body,
+      message: "verified!"
+    });
+  },
   register: async (req, res) => {
     try {
-      const credential = req.body;
+      const { credentials } = req.body;
       const isUserCreated = await userModel.findOne({
-        email: credential.email
+        email: credentials.email
       });
       if (isUserCreated) {
         return res.send({
           confirmation: false,
+          user: {},
           message: "email address is not valid"
         });
       }
 
       // hash password & create user
-      credential.password = bcrypt.hashSync(credential.password, 10);
-      const user = await userModel.create(credential);
+      credentials.password = bcrypt.hashSync(credentials.password, 10);
+      const user = await userModel.create(credentials);
       res.send({
         confirmation: true,
         user: userSummary(user),
@@ -66,29 +75,31 @@ const authController = {
   },
   login: async (req, res) => {
     try {
-      const credential = req.body;
+      const { credentials } = req.body;
       const user = await userModel.findOne({
-        email: credential.email
+        email: credentials.email
       });
 
       // if email is not yet registered
       if (!user) {
         return res.send({
           confirmation: false,
+          user: {},
           message: `this email account ${
-            credential.email
+            credentials.email
           } is not yet registered`
         });
       }
 
       // validate password
       const isPasswordValid = bcrypt.compareSync(
-        credential.password,
+        credentials.password,
         user.password
       );
       if (!isPasswordValid) {
         return res.send({
           confirmation: false,
+          user: {},
           message: "invalid log in information"
         });
       }
@@ -103,6 +114,7 @@ const authController = {
     } catch (err) {
       return res.send({
         confirmation: false,
+        user: {},
         message: "an error has occured trying to login"
       });
     }

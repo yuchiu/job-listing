@@ -21,6 +21,7 @@ module.exports = {
         "no-unused-vars":0,
         "import/prefer-default-export":0,
         "no-underscore-dangle":0,
-        "consistent-return":0
+        "consistent-return":0,
+        "linebreak-style": 0
     },
 };

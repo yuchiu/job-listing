@@ -2,12 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import config from "../config";
 
+import config from "../config";
 import routes from "./routes";
 
+import "./utils/passport";
+
 mongoose.connect(
-  config.DB_LOCAL,
+  config.DB_CLOUD,
   { useNewUrlParser: true },
   err => {
     if (err) {

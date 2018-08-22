@@ -1,5 +1,6 @@
 {
   "DB_LOCAL": "mongodb://localhost:27017/job-listing",
+  "DB_CLOUD":"mongodb://admin1:admin1@ds141490.mlab.com:41490/job-listing",
   "PORT": 3200,
   "JWT_SECRET": "djiosajdi9r8je9r09321309r092fdisjvbmi08"
 }

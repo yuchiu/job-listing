@@ -1,3 +1,3 @@
-import authPolicy from "./authPolicy";
+import { authPolicy } from "./policies";
 
 export { authPolicy };

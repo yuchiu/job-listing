@@ -19,20 +19,23 @@ const userSummary = user => {
 
 const userController = {
   followUp: async (req, res) => {
-    console.log("inside follow up");
     try {
-      const credential = req.body;
+      const { credentials } = req.body;
 
-      const user = await userModel.findOneAndUpdate(credential.id, credential, {
-        new: true
-      });
+      const user = await userModel.findOneAndUpdate(
+        credentials.id,
+        credentials,
+        {
+          new: true
+        }
+      );
       if (!user) {
         return res.send({
           confirmation: false,
+          user: {},
           message: "user does not exist"
         });
       }
-      console.log(user);
       res.send({
         confirmation: true,
         user: userSummary(user),
@@ -42,6 +45,7 @@ const userController = {
       console.log(err);
       return res.send({
         confirmation: false,
+        user: {},
         message: "an error has occured trying to update follow up"
       });
     }

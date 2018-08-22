@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "../utils/interceptors";
 import "../index.css";
 import { auth } from "../utils";
-import { VerifyAuthRouter } from "./global";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
@@ -48,33 +47,30 @@ class Router extends React.Component {
       <h2>Error occured while rendering this page</h2>
     ) : (
       <BrowserRouter>
-        <React.Fragment>
-          <VerifyAuthRouter />
-          <Switch>
-            <AuthenticatedRoute exact path="/" component={LandingPage} />
-            <Route exact path="/register" component={RegisterPage} />
-            <Route exact path="/login" component={LoginPage} />
-            <AuthenticatedRoute
-              exact
-              path="/bossfollowup"
-              component={BossFollowUpPage}
-            />
-            <AuthenticatedRoute
-              exact
-              path="/geniusfollowup"
-              component={GeniusFollowUpPage}
-            />
-            <Route exact path="/browse" component={BrowsePage} />
-            <AuthenticatedRoute exact path="/message" component={MessagePage} />
-            <AuthenticatedRoute
-              exact
-              path="/my-profile"
-              component={MyProfilePage}
-            />
-            <AuthenticatedRoute exact path="/testing" component={TestingPage} />
-            <Route exact path="/:unfoundLocation" component={NotFoundPage} />
-          </Switch>
-        </React.Fragment>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/browse" component={BrowsePage} />
+          <Route exact path="/testing" component={TestingPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <AuthenticatedRoute
+            exact
+            path="/bossfollowup"
+            component={BossFollowUpPage}
+          />
+          <AuthenticatedRoute
+            exact
+            path="/geniusfollowup"
+            component={GeniusFollowUpPage}
+          />
+          <AuthenticatedRoute exact path="/message" component={MessagePage} />
+          <AuthenticatedRoute
+            exact
+            path="/my-profile"
+            component={MyProfilePage}
+          />
+          <Route exact path="/:unfoundLocation" component={NotFoundPage} />
+        </Switch>
       </BrowserRouter>
     );
   }

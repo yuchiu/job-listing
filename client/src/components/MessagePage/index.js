@@ -1,5 +1,12 @@
 import React from "react";
 
-const MessagePage = () => <div>MessagePage page</div>;
+import { NavBar } from "../global";
+
+const MessagePage = () => (
+  <div>
+    <NavBar />
+    MessagePage page
+  </div>
+);
 
 export default MessagePage;

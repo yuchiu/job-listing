@@ -1,5 +1,11 @@
 import React from "react";
+import { NavBar } from "../global";
 
-const MyProfilePage = () => <div>MyProfilePage page</div>;
+const MyProfilePage = () => (
+  <div>
+    <NavBar />
+    MyProfilePage page
+  </div>
+);
 
 export default MyProfilePage;

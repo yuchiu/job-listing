@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Navbar } from "../global";
+import { NavBar } from "../global";
 
 const NotFoundPage = ({
   match: {
@@ -9,7 +9,7 @@ const NotFoundPage = ({
   }
 }) => (
   <div>
-    <Navbar />
+    <NavBar />
     404! The page `{unfoundLocation}` is not found.
   </div>
 );

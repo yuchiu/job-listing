@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Navbar } from "../global";
+import { NavBar } from "../global";
 import TextChanger from "./TextChanger";
 
 const TestingPage = () => (
   <div>
-    <Navbar />
+    <NavBar />
     <TextChanger />
   </div>
 );

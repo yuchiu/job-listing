@@ -1,3 +1,4 @@
 import authService from "./auth.service";
+import browseService from "./browse.service";
 
-export { authService };
+export { browseService, authService };

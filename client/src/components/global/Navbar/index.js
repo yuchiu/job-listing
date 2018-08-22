@@ -13,10 +13,34 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { isUserAuthenticated } = this.props;
+    const { isUserAuthenticated, username } = this.props;
     return (
       <div>
-        {isUserAuthenticated && (
+        {isUserAuthenticated &&
+          username && (
+            <div className="nav-bar">
+              <Link to="/">
+                <li>Job Hunting</li>
+              </Link>
+              <span>Hi! {username}</span>
+              <Link to="/browse">
+                <li>Browse</li>
+              </Link>
+              <Link to="/testing">
+                <li>testing</li>
+              </Link>
+              <Link to="/messages">
+                <li>Messages</li>
+              </Link>
+              <Link to="/my-profile">
+                <li>My Profile</li>
+              </Link>
+              <Button type="primary" onClick={this.handleClick}>
+                Log Out
+              </Button>
+            </div>
+          )}
+        {!isUserAuthenticated && (
           <div className="nav-bar">
             <Link to="/">
               <li>Job Hunting</li>
@@ -24,12 +48,15 @@ class NavBar extends React.Component {
             <Link to="/testing">
               <li>testing</li>
             </Link>
-            <Button type="primary" onClick={this.handleClick}>
-              Log Out
-            </Button>
+            <span>Hi there!</span>
+            <Link to="/login">
+              <li>login</li>
+            </Link>
+            <Link to="/register">
+              <li>register</li>
+            </Link>
           </div>
         )}
-        {!isUserAuthenticated && <Redirect to="/login" />}
       </div>
     );
   }
@@ -37,12 +64,13 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   isUserAuthenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  username: PropTypes.string
 };
 
 const stateToProps = state => ({
   isUserAuthenticated: state.userReducer.isUserAuthenticated,
-  user: state.userReducer.user
+  username: state.userReducer.user.username
 });
 const dispatchToProps = dispatch => ({
   logout: () => {

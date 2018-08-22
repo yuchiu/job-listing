@@ -2,13 +2,6 @@ import constants from "../constants";
 import { authService } from "../services";
 
 const authAction = {
-  verifyUser: token => async dispatch => {
-    const response = await authService.validateJWT(token);
-    dispatch({
-      type: constants.LOGIN,
-      payload: response
-    });
-  },
   register: credentials => async dispatch => {
     const response = await authService.registerUser(credentials);
     dispatch({

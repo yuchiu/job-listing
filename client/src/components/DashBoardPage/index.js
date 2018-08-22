@@ -1,50 +1,59 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+import QueueAnim from "rc-queue-anim";
 import PropTypes from "prop-types";
 
-import { userAction } from "../../actions";
-import { Navbar, ReactLogo } from "../global";
-import "./index.css";
+import BrowseListPage from "./BrowseListPage";
+import MessagePage from "./MessagePage";
+import MyProfilePage from "./MyProfilePage";
+import NavLinkBar from "./NavLinkBar";
 
 class DashboardPage extends React.Component {
   render() {
-    const { isUserAuthenticated } = this.props;
-    return (
-      <div>
-        {isUserAuthenticated && (
-          <div className="App">
-            <Navbar />
-            <header className="App-header">
-              <ReactLogo />
-              <h1 className="App-title">Welcome to React</h1>
-            </header>
-            <p className="App-intro">
-              To get started, edit <code>src/App.js</code> and save to reload.
-            </p>
-          </div>
-        )}
-        {!isUserAuthenticated && <Redirect to="/login" />}
-      </div>
+    const navList = [
+      {
+        path: "/browse-list",
+        text: "browse-list",
+        icon: "job",
+        title: "Browse",
+        component: BrowseListPage
+      },
+      {
+        path: "/message",
+        text: "message",
+        icon: "msg",
+        title: "My Messages",
+        component: MessagePage
+      },
+      {
+        path: "/my-profile",
+        text: "my-profile",
+        icon: "user",
+        title: "My Profile",
+        component: MyProfilePage
+      }
+    ];
+    const {
+      location: { pathname }
+    } = this.props;
+    const page = navList.find(v => v.path === pathname);
+    return page ? (
+      <React.Fragment>
+        <div className="dashboard-top">{page.title}</div>
+        <QueueAnim className="dashboard-wrapper" type="scaleX" delay={300}>
+          <Route path={page.path} component={page.component} key={page.path} />
+        </QueueAnim>
+        <nav className="dashboard-nav">
+          <NavLinkBar data={navList} />
+        </nav>
+      </React.Fragment>
+    ) : (
+      <Redirect to="/message" />
     );
   }
 }
-
 DashboardPage.propTypes = {
-  isUserAuthenticated: PropTypes.bool.isRequired
+  location: PropTypes.object.isRequired
 };
 
-const stateToProps = state => ({
-  isUserAuthenticated: state.userReducer.isUserAuthenticated,
-  user: state.userReducer.user
-});
-const dispatchToProps = dispatch => ({
-  logout: () => {
-    dispatch(userAction.logout());
-  }
-});
-
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(DashboardPage);
+export default DashboardPage;

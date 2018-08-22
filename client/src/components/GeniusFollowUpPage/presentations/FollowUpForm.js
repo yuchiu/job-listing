@@ -7,7 +7,7 @@ import { AvatarSelector } from "../../global";
 const FollowUpForm = ({
   selectAvatar,
   handleChange,
-  credentialFollowUp,
+  followUpCredentials,
   handleSubmit
 }) => (
   <div className="info-container">
@@ -18,7 +18,7 @@ const FollowUpForm = ({
       placeholder="hiring position"
       size="large"
       name="title"
-      value={credentialFollowUp.title}
+      value={followUpCredentials.title}
       onChange={handleChange}
     />
     <label>About You:</label>
@@ -26,7 +26,7 @@ const FollowUpForm = ({
       placeholder="requirements"
       autosize={{ minRows: 3 }}
       name="desc"
-      value={credentialFollowUp.desc}
+      value={followUpCredentials.desc}
       onChange={handleChange}
     />
     <Button size="large" className="btn" onClick={handleSubmit}>
@@ -39,6 +39,6 @@ FollowUpForm.propTypes = {
   selectAvatar: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  credentialFollowUp: PropTypes.object.isRequired
+  followUpCredentials: PropTypes.object.isRequired
 };
 export default FollowUpForm;

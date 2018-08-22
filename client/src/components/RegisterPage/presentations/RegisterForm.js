@@ -9,7 +9,7 @@ const RegisterForm = ({
   onChange,
   redirectToLogin,
   clientErrors,
-  credential
+  credentials
 }) => (
   <Form className="register-form">
     <Form.Item>
@@ -20,7 +20,7 @@ const RegisterForm = ({
         id="username"
         type="username"
         name="username"
-        value={credential.username}
+        value={credentials.username}
         className=""
         onChange={onChange}
         placeholder="username"
@@ -35,7 +35,7 @@ const RegisterForm = ({
         id="email"
         type="email"
         name="email"
-        value={credential.email}
+        value={credentials.email}
         className=""
         onChange={onChange}
         placeholder="email"
@@ -50,7 +50,7 @@ const RegisterForm = ({
         id="password"
         type="password"
         name="password"
-        value={credential.password}
+        value={credentials.password}
         className="validate"
         onChange={onChange}
         placeholder="password"
@@ -67,7 +67,7 @@ const RegisterForm = ({
         id="confirm_password"
         type="password"
         name="confirmPassword"
-        value={credential.confirmPassword}
+        value={credentials.confirmPassword}
         className="validate"
         onChange={onChange}
         placeholder="confirm password"
@@ -98,7 +98,7 @@ RegisterForm.propTypes = {
   handleRegister: PropTypes.func.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  credential: PropTypes.object.isRequired,
+  credentials: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired
 };
 

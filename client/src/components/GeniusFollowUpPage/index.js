@@ -11,7 +11,7 @@ import { FollowUpForm } from "./presentations";
 class GeniusFollowUpPage extends React.Component {
   state = {
     clientErrors: {},
-    credentialFollowUp: {
+    followUpCredentials: {
       title: "",
       desc: "",
       avatar: ""
@@ -20,7 +20,7 @@ class GeniusFollowUpPage extends React.Component {
 
   componentWillUnmount() {
     this.setState({
-      credentialFollowUp: {
+      followUpCredentials: {
         title: "",
         desc: "",
         avatar: ""
@@ -29,18 +29,18 @@ class GeniusFollowUpPage extends React.Component {
   }
 
   handleChange = e => {
-    const { credentialFollowUp } = this.state;
+    const { followUpCredentials } = this.state;
     const field = e.target.name;
-    credentialFollowUp[field] = e.target.value;
+    followUpCredentials[field] = e.target.value;
 
     this.setState({
-      credentialFollowUp
+      followUpCredentials
     });
   };
 
   selectAvatar = avatar => {
     this.setState({
-      credentialFollowUp: {
+      followUpCredentials: {
         avatar
       }
     });
@@ -49,26 +49,24 @@ class GeniusFollowUpPage extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     const userId = auth.getUserId();
-    const { credentialFollowUp } = this.state;
+    const { followUpCredentials } = this.state;
     const { followupUserInfo } = this.props;
-    followupUserInfo(credentialFollowUp, userId);
+    followupUserInfo(followUpCredentials, userId);
   };
 
   render() {
     const username = auth.getUsername();
-    const isUserAuthenticated = auth.isUserAuthenticated();
-    const { credentialFollowUp } = this.state;
+    const { followUpCredentials } = this.state;
     const {
-      redirectTo,
+      isUserAuthenticated,
       message,
+      user,
       location: { pathname }
     } = this.props;
     return (
       <div>
         {!isUserAuthenticated && <Redirect to="/login" />}
-        {redirectTo && redirectTo !== pathname ? (
-          <Redirect to={redirectTo} />
-        ) : null}
+        {isUserAuthenticated && user.avatar && <Redirect to="/dashboard" />}
         <InfoNav
           name={username}
           text=" You are one step closer! Please complete the follow up info."
@@ -76,7 +74,7 @@ class GeniusFollowUpPage extends React.Component {
         <FollowUpForm
           selectAvatar={this.selectAvatar}
           handleChange={this.handleChange}
-          credentialFollowUp={credentialFollowUp}
+          followUpCredentials={followUpCredentials}
           handleSubmit={this.handleSubmit}
         />
         <br />
@@ -87,17 +85,19 @@ class GeniusFollowUpPage extends React.Component {
 }
 GeniusFollowUpPage.propTypes = {
   followupUserInfo: PropTypes.func.isRequired,
-  redirectTo: PropTypes.string,
+  user: PropTypes.object,
+  isUserAuthenticated: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired
 };
 const stateToProps = state => ({
-  redirectTo: state.userReducer.redirectTo,
-  message: state.userReducer.message
+  isUserAuthenticated: state.userReducer.isUserAuthenticated,
+  message: state.userReducer.message,
+  user: state.userReducer.user
 });
 const dispatchToProps = dispatch => ({
-  followupUserInfo: (credentialFollowUp, userId) => {
-    dispatch(userAction.followupUserInfo(credentialFollowUp, userId));
+  followupUserInfo: (followUpCredentials, userId) => {
+    dispatch(userAction.followupUserInfo(followUpCredentials, userId));
   }
 });
 

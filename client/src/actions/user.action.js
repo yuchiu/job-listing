@@ -1,17 +1,34 @@
 import constants from "../constants";
-import { API } from "../utils";
+import { authService } from "../services";
 
 const authAction = {
-  register: credential => async dispatch => {
-    const response = await API.registerUser(credential);
+  verifyUser: token => async dispatch => {
+    const response = await authService.validateJWT(token);
+    dispatch({
+      type: constants.LOGIN,
+      payload: response
+    });
+  },
+  register: credentials => async dispatch => {
+    const response = await authService.registerUser(credentials);
     dispatch({
       type: constants.LOGIN,
       payload: response
     });
   },
 
-  login: credential => async dispatch => {
-    const response = await API.loginUser(credential);
+  login: credentials => async dispatch => {
+    const response = await authService.loginUser(credentials);
+    dispatch({
+      type: constants.LOGIN,
+      payload: response
+    });
+  },
+  followupUserInfo: (followUpCredentials, userId) => async dispatch => {
+    const response = await authService.followupUser(
+      followUpCredentials,
+      userId
+    );
     dispatch({
       type: constants.LOGIN,
       payload: response
@@ -21,13 +38,6 @@ const authAction = {
     dispatch({
       type: constants.LOGOUT,
       payload: null
-    });
-  },
-  followupUserInfo: (credentialFollowUp, userId) => async dispatch => {
-    const response = await API.followupUser(credentialFollowUp, userId);
-    dispatch({
-      type: constants.FOLLOWUP_USER,
-      payload: response
     });
   }
 };

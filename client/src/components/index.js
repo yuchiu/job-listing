@@ -3,9 +3,11 @@ import "antd-mobile/dist/antd-mobile.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { auth } from "../utils";
+import { VerifyAuthRouter } from "./global";
 import TestingPage from "./TestingPage";
 import NotFoundPage from "./NotFoundPage";
-import DashboardPage from "./DashBoardPage";
+import LandingPage from "./LandingPage";
+import DashboardPage from "./DashboardPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import BossFollowUpPage from "./BossFollowUpPage";
@@ -26,27 +28,52 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
+class Router extends React.Component {
+  state = {
+    hasError: false
+  };
 
-const Router = () => (
-  <BrowserRouter>
-    <Switch>
-      <AuthenticatedRoute exact path="/" component={DashboardPage} />
-      <Route exact path="/register" component={RegisterPage} />
-      <Route exact path="/login" component={LoginPage} />
-      <AuthenticatedRoute
-        exact
-        path="/bossfollowup"
-        component={BossFollowUpPage}
-      />
-      <AuthenticatedRoute
-        exact
-        path="/geniusfollowup"
-        component={GeniusFollowUpPage}
-      />
-      <AuthenticatedRoute exact path="/testing" component={TestingPage} />
-      <Route exact path="/:unfoundLocation" component={NotFoundPage} />
-    </Switch>
-  </BrowserRouter>
-);
+  componentDidCatch(error, info) {
+    console.log(error, info);
+    this.setState({
+      hasError: true
+    });
+  }
+
+  render() {
+    const { hasError } = this.state;
+    return hasError ? (
+      <h2>Error occured while rendering this page</h2>
+    ) : (
+      <BrowserRouter>
+        <React.Fragment>
+          <VerifyAuthRouter />
+          <Switch>
+            <AuthenticatedRoute exact path="/" component={LandingPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <AuthenticatedRoute
+              exact
+              path="/bossfollowup"
+              component={BossFollowUpPage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/geniusfollowup"
+              component={GeniusFollowUpPage}
+            />
+            <AuthenticatedRoute exact path="/testing" component={TestingPage} />
+            <AuthenticatedRoute
+              exact
+              path="/dashboard"
+              component={DashboardPage}
+            />
+            <Route exact path="/:unfoundLocation" component={NotFoundPage} />
+          </Switch>
+        </React.Fragment>
+      </BrowserRouter>
+    );
+  }
+}
 
 export default Router;

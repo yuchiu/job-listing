@@ -11,7 +11,7 @@ import { LoginForm } from "./presentations";
 class LoginPage extends React.Component {
   state = {
     clientErrors: {},
-    credential: {
+    credentials: {
       email: "",
       password: ""
     }
@@ -19,7 +19,7 @@ class LoginPage extends React.Component {
 
   componentWillUnmount() {
     this.setState({
-      credential: {
+      credentials: {
         email: "",
         password: ""
       }
@@ -32,12 +32,12 @@ class LoginPage extends React.Component {
   };
 
   handleChange = e => {
-    const { credential } = this.state;
+    const { credentials } = this.state;
     const field = e.target.name;
-    credential[field] = e.target.value;
+    credentials[field] = e.target.value;
 
     this.setState({
-      credential
+      credentials
     });
   };
 
@@ -45,24 +45,40 @@ class LoginPage extends React.Component {
     e.preventDefault();
 
     const {
-      credential,
-      credential: { email, password }
+      credentials,
+      credentials: { email, password }
     } = this.state;
 
-    const clientErrors = validateForm.signIn(credential);
+    const clientErrors = validateForm.signIn(credentials);
     this.setState({ clientErrors });
     if (Object.keys(clientErrors).length === 0) {
       const { login } = this.props;
-      login({ email, password });
+      login(credentials);
     }
   };
 
+  redirectTo = user => {
+    let path = "";
+    const { role, avatar } = user;
+    if (role === "boss" || role === "genius") {
+      path = `/${role}`;
+      // eslint-disable-next-line
+    if (avatar === "") {
+        path += "followup";
+      } else {
+        path = "/dashboard";
+      }
+    }
+    return path;
+  };
+
   render() {
-    const { clientErrors, credential } = this.state;
-    const { isUserAuthenticated, redirectTo, message } = this.props;
+    const { clientErrors, credentials } = this.state;
+    const { isUserAuthenticated, message, user } = this.props;
     return (
       <div className="login-page">
-        {redirectTo && <Redirect to={redirectTo} />}
+        {isUserAuthenticated &&
+          user.role && <Redirect to={this.redirectTo(user)} />}
         <InfoNav name="there" text=" " />
         <FormLogo />
         <h2 className="login-page__title">Log In</h2>
@@ -71,7 +87,7 @@ class LoginPage extends React.Component {
           onChange={this.handleChange}
           redirectToRegister={this.redirectToRegister}
           clientErrors={clientErrors}
-          credential={credential}
+          credentials={credentials}
         />
         <br />
         {message && <InlineError text={message} />}
@@ -83,19 +99,19 @@ LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  redirectTo: PropTypes.string,
-  message: PropTypes.string
+  message: PropTypes.string,
+  user: PropTypes.object
 };
 
 const stateToProps = state => ({
   isUserAuthenticated: state.userReducer.isUserAuthenticated,
-  redirectTo: state.userReducer.redirectTo,
+  user: state.userReducer.user,
   message: state.userReducer.message
 });
 
 const dispatchToProps = dispatch => ({
-  login: credential => {
-    dispatch(userAction.login(credential));
+  login: credentials => {
+    dispatch(userAction.login(credentials));
   }
 });
 

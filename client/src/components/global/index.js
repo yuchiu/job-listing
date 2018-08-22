@@ -4,5 +4,14 @@ import FormLogo from "./FormLogo";
 import InlineError from "./InlineError";
 import InfoNav from "./InfoNav";
 import AvatarSelector from "./AvatarSelector";
+import VerifyAuthRouter from "./VerifyAuthRouter";
 
-export { Navbar, InlineError, ReactLogo, FormLogo, InfoNav, AvatarSelector };
+export {
+  Navbar,
+  InlineError,
+  ReactLogo,
+  FormLogo,
+  InfoNav,
+  VerifyAuthRouter,
+  AvatarSelector
+};

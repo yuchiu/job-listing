@@ -19,8 +19,6 @@ const userSummary = user => {
   const summary = {
     id: user._id.toString(),
     username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
     email: user.email,
     role: user.role,
     title: user.title,

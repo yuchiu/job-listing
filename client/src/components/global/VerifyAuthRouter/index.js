@@ -11,7 +11,6 @@ class VerifyAuthRouter extends React.Component {
   componentDidMount() {
     const {
       isUserAuthenticated,
-      verifyUser,
       history,
       location: { pathname }
     } = this.props;
@@ -20,35 +19,28 @@ class VerifyAuthRouter extends React.Component {
       return null;
     }
 
-    console.log("run component");
     const token = auth.getToken();
-    verifyUser(token);
     if (isUserAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/browse");
     } else {
       this.props.history.push("/login");
     }
   }
 
   render() {
-    return <div>assasas</div>;
+    return null;
   }
 }
 
 const stateToProps = state => ({
   isUserAuthenticated: state.userReducer.isUserAuthenticated
 });
-const dispatchToProps = dispatch => ({
-  verifyUser: token => {
-    dispatch(userAction.verifyUser(token));
-  }
-});
+const dispatchToProps = dispatch => ({});
 
 VerifyAuthRouter.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  isUserAuthenticated: PropTypes.bool.isRequired,
-  verifyUser: PropTypes.func.isRequired
+  isUserAuthenticated: PropTypes.bool.isRequired
 };
 
 export default withRouter(

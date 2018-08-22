@@ -2,18 +2,20 @@ import React from "react";
 import "antd-mobile/dist/antd-mobile.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
+import "../utils/interceptors";
+import "../index.css";
 import { auth } from "../utils";
 import { VerifyAuthRouter } from "./global";
-import TestingPage from "./TestingPage";
-import NotFoundPage from "./NotFoundPage";
 import LandingPage from "./LandingPage";
-import DashboardPage from "./DashboardPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import BossFollowUpPage from "./BossFollowUpPage";
 import GeniusFollowUpPage from "./GeniusFollowUpPage";
-import "../utils/interceptors";
-import "../index.css";
+import BrowsePage from "./BrowsePage";
+import MessagePage from "./MessagePage";
+import MyProfilePage from "./MyProfilePage";
+import TestingPage from "./TestingPage";
+import NotFoundPage from "./NotFoundPage";
 
 // eslint-disable-next-line
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
@@ -62,12 +64,14 @@ class Router extends React.Component {
               path="/geniusfollowup"
               component={GeniusFollowUpPage}
             />
-            <AuthenticatedRoute exact path="/testing" component={TestingPage} />
+            <Route exact path="/browse" component={BrowsePage} />
+            <AuthenticatedRoute exact path="/message" component={MessagePage} />
             <AuthenticatedRoute
               exact
-              path="/dashboard"
-              component={DashboardPage}
+              path="/my-profile"
+              component={MyProfilePage}
             />
+            <AuthenticatedRoute exact path="/testing" component={TestingPage} />
             <Route exact path="/:unfoundLocation" component={NotFoundPage} />
           </Switch>
         </React.Fragment>

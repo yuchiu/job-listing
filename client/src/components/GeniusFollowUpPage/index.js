@@ -66,7 +66,7 @@ class GeniusFollowUpPage extends React.Component {
     return (
       <div>
         {!isUserAuthenticated && <Redirect to="/login" />}
-        {isUserAuthenticated && user.avatar && <Redirect to="/dashboard" />}
+        {isUserAuthenticated && user.avatar && <Redirect to="/browse" />}
         <InfoNav
           name={username}
           text=" You are one step closer! Please complete the follow up info."

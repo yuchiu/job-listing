@@ -1,10 +1,6 @@
 import API from "./API";
 
 const authService = {
-  validateJWT: async token => {
-    const payload = await API().get(`/auth/verifyuser`, token);
-    return payload.data;
-  },
   registerUser: async credentials => {
     const payload = await API().post(`/auth/register`, credentials);
     return payload.data;

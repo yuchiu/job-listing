@@ -66,7 +66,7 @@ class LoginPage extends React.Component {
     if (avatar === "") {
         path += "followup";
       } else {
-        path = "/dashboard";
+        path = "/browse";
       }
     }
     return path;

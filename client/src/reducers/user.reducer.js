@@ -1,11 +1,15 @@
-import constants from "../constants";
-import { auth, redirectPath } from "../utils";
+import { defineState } from "redux-localstore";
 
-const initialState = {
+import constants from "../constants";
+import { auth } from "../utils";
+
+const defaultState = {
   isUserAuthenticated: false,
   user: {},
   message: ""
 };
+
+const initialState = defineState(defaultState)("userReducer");
 
 export default (state = initialState, action) => {
   const newState = Object.assign({}, state);

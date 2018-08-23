@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { browseAction } from "../../actions";
 import { NavBar } from "../global";
-import UserCard from "./UserCard";
+import { UserCard } from "./presentations";
 
 class BrowsePage extends React.Component {
   componentDidMount() {

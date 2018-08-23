@@ -11,11 +11,11 @@ const UserCard = ({ browseList }) => (
           <Card
             title={`position:${card.title}`}
             extra={`${card.username}`}
-            key={card.id}
+            key={`key-${card.id}`}
           >
-            <div className="niuren-left">
+            <div className="left">
               <img
-                src={require(`../global/AvatarSelector/images/${
+                src={require(`../../global/AvatarSelector/images/${
                   card.avatar
                 }.png`)}
                 alt=""
@@ -25,12 +25,20 @@ const UserCard = ({ browseList }) => (
                 contact him/her
               </p>
             </div>
+            <div className="right">
+              {card.company ? <div>company: {card.company}</div> : null}
+              <b>{card.role === "boss" ? "requirement：" : "description: "}</b>
+              {card.desc.split("\n").map((desc, i) => (
+                <p key={desc + i}>{desc}</p>
+              ))}
+              {card.salary ? <div>salary: {card.salary}</div> : null}
+            </div>
           </Card>
         ) : null
     )}
   </React.Fragment>
 );
 UserCard.propTypes = {
-  browseList: PropTypes.array.isRequire
+  browseList: PropTypes.array.isRequired
 };
 export default UserCard;

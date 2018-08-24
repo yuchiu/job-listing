@@ -10,6 +10,7 @@ const routes = app => {
   app.get("/test", testController.getTest);
   app.post("/auth/register", authPolicy.register, authController.register);
   app.post("/auth/login", authController.login);
+  app.post("/auth/update-profile", authController.updateProfile);
   app.post("/user/followup", userController.followUp);
   app.get("/api/v1/browse-list", browseController.getBrowseList);
 };

@@ -9,7 +9,7 @@ import routes from "./routes";
 import "./utils/passport";
 
 mongoose.connect(
-  config.DB_CLOUD,
+  config.DB_LOCAL,
   { useNewUrlParser: true },
   err => {
     if (err) {

@@ -30,6 +30,16 @@ const userSummary = user => {
   return summary;
 };
 
+const noIdUserSummary = user => {
+  const summary = {
+    password: user.password,
+    title: user.title,
+    desc: user.desc,
+    salary: user.salary
+  };
+  return summary;
+};
+
 const authController = {
   register: async (req, res) => {
     try {
@@ -56,7 +66,6 @@ const authController = {
       });
     } catch (err) {
       console.log(err);
-
       return res.send({
         confirmation: false,
         message: "an error has occured trying to register"
@@ -90,7 +99,7 @@ const authController = {
         return res.send({
           confirmation: false,
           user: {},
-          message: "invalid log in information"
+          message: "invalid password"
         });
       }
 
@@ -102,10 +111,70 @@ const authController = {
         message: "sign in successfully"
       });
     } catch (err) {
+      console.log(err);
       return res.send({
         confirmation: false,
         user: {},
         message: "an error has occured trying to login"
+      });
+    }
+  },
+  updateProfile: async (req, res) => {
+    try {
+      const credentials = req.body;
+
+      // find user
+      const user = await userModel.findOne({
+        email: credentials.email
+      });
+
+      // if email is not yet registered
+      if (!user) {
+        return res.send({
+          confirmation: false,
+          user: {},
+          message: "user does not exist"
+        });
+      }
+
+      // validate password
+      const isPasswordValid = bcrypt.compareSync(
+        credentials.password,
+        user.password
+      );
+      if (!isPasswordValid) {
+        return res.send({
+          confirmation: false,
+          user: {},
+          message: "invalid password"
+        });
+      }
+
+      // hash new password
+      const newPassword = bcrypt.hashSync(credentials.newPassword, 10);
+
+      // user is valid, assign user's password with new password
+      const updatedCredentials = Object.assign({}, credentials, {
+        password: newPassword
+      });
+      delete updatedCredentials.newPassword;
+      const validUser = await userModel.findOneAndUpdate(
+        user.id,
+        noIdUserSummary(updatedCredentials),
+        {
+          new: true
+        }
+      );
+      res.send({
+        confirmation: true,
+        user: userSummary(validUser),
+        message: "updated user profile succesfully"
+      });
+    } catch (err) {
+      console.log(err);
+      return res.send({
+        confirmation: false,
+        message: "an error has occured trying to update Profile"
       });
     }
   }

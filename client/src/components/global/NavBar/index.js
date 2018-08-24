@@ -8,8 +8,9 @@ import { userAction } from "../../../actions";
 
 class NavBar extends React.Component {
   handleClick = () => {
-    const { logout } = this.props;
+    const { logout, history } = this.props;
     logout();
+    history.push("/");
   };
 
   render() {
@@ -29,8 +30,8 @@ class NavBar extends React.Component {
               <Link to="/testing">
                 <li>testing</li>
               </Link>
-              <Link to="/messages">
-                <li>Messages</li>
+              <Link to="/message">
+                <li>Message</li>
               </Link>
               <Link to="/my-profile">
                 <li>My Profile</li>
@@ -64,6 +65,7 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   isUserAuthenticated: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
   username: PropTypes.string
 };

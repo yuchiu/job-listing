@@ -15,7 +15,7 @@ const FollowUpForm = ({
     <h2>Please fill out the requirements for the hiring position:</h2>
     <label>Job Title:</label>
     <Input
-      placeholder="hiring position"
+      placeholder="job title"
       size="large"
       name="title"
       value={followUpCredentials.title}

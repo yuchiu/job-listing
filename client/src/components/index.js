@@ -3,7 +3,7 @@ import "antd-mobile/dist/antd-mobile.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "../utils/interceptors";
-import "../index.css";
+import "./index.css";
 import { auth } from "../utils";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage";

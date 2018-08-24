@@ -1,5 +1,5 @@
 import constants from "../constants";
-import { browseService } from "../services";
+import { browseService } from "./services";
 
 const authAction = {
   fetchList: () => async dispatch => {

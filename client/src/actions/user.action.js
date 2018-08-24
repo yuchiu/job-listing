@@ -1,5 +1,5 @@
 import constants from "../constants";
-import { authService } from "../services";
+import { authService } from "./services";
 
 const authAction = {
   register: credentials => async dispatch => {
@@ -24,6 +24,18 @@ const authAction = {
     );
     dispatch({
       type: constants.LOGIN,
+      payload: response
+    });
+  },
+  editProfile: credentials => async dispatch => {
+    console.log("action in side");
+    console.log(credentials);
+
+    const response = await authService.editProfileRequest(credentials);
+    console.log("response in side");
+    console.log(response);
+    dispatch({
+      type: constants.EDIT_PROFILE,
       payload: response
     });
   },

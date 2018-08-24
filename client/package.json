@@ -49,6 +49,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react-app": "^2.1.0",
+    "eslint-import-resolver-alias": "^1.1.1",
     "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.39.1",
     "eslint-plugin-import": "^2.13.0",
@@ -120,6 +121,46 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "parser": "babel-eslint",
+    "extends": [
+      "airbnb-base",
+      "plugin:prettier/recommended",
+      "plugin:react/recommended"
+    ],
+    "plugins": [
+      "react"
+    ],
+    "env": {
+      "browser": true,
+      "jest": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true,
+        "modules": true,
+        "experimentalObjectRestSpread": true
+      }
+    },
+    "rules": {
+      "class-methods-use-this": 0,
+      "import/prefer-default-export": 0,
+      "no-underscore-dangle": 0,
+      "linebreak-style": 0,
+      "no-unused-vars": 0,
+      "global-require": 0,
+      "import/no-dynamic-require": 0,
+      "no-console": 0
+    },
+    "settings": {
+      "import/resolver": {
+        "alias": [
+          [
+            "@",
+            "./src"
+          ]
+        ]
+      }
+    }
   }
 }

@@ -12,19 +12,25 @@ class BrowsePage extends React.Component {
     fetchList();
   }
 
+  handleClick = user => {
+    const { history } = this.props;
+    history.push(`/message/${user._id}`);
+  };
+
   render() {
     const { browseList } = this.props;
     return (
       <div>
         <NavBar />
-        <UserCard browseList={browseList} />
+        <UserCard browseList={browseList} handleClick={this.handleClick} />
       </div>
     );
   }
 }
 BrowsePage.propTypes = {
   fetchList: PropTypes.func.isRequired,
-  browseList: PropTypes.array.isRequired
+  browseList: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const stateToProps = state => ({

@@ -9,6 +9,7 @@ const EditProfile = ({
   credentials,
   clientErrors,
   handleChange,
+  toggleEdit,
   handleSave
 }) => (
   <Form className="info-container">
@@ -122,8 +123,11 @@ const EditProfile = ({
         />
       </Form.Item>
     )}
-    <Button size="large" htmlType="submit" onClick={handleSave}>
+    <Button size="large" type="primary" htmlType="submit" onClick={handleSave}>
       Save
+    </Button>
+    <Button size="large" onClick={toggleEdit}>
+      Cancel
     </Button>
   </Form>
 );
@@ -131,6 +135,7 @@ EditProfile.propTypes = {
   user: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired,
+  toggleEdit: PropTypes.func.isRequired,
   credentials: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired
 };

@@ -61,6 +61,16 @@ class MyProfilePage extends React.Component {
   toggleEdit = () => {
     const { editProfile } = this.state;
     this.setState({ editProfile: !editProfile });
+    this.setState({
+      credentials: {
+        password: "",
+        newPassword: "",
+        title: "",
+        company: "",
+        salary: "",
+        desc: ""
+      }
+    });
   };
 
   render() {
@@ -76,6 +86,7 @@ class MyProfilePage extends React.Component {
             clientErrors={clientErrors}
             handleChange={this.handleChange}
             handleSave={this.handleSave}
+            toggleEdit={this.toggleEdit}
           />
         ) : (
           <Profile user={user} toggleEdit={this.toggleEdit} />

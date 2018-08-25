@@ -63,7 +63,11 @@ class Router extends React.Component {
             path="/geniusfollowup"
             component={GeniusFollowUpPage}
           />
-          <AuthenticatedRoute exact path="/message" component={MessagePage} />
+          <AuthenticatedRoute
+            exact
+            path="/message/:user"
+            component={MessagePage}
+          />
           <AuthenticatedRoute
             exact
             path="/my-profile"

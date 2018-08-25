@@ -2,36 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, Icon } from "antd";
 
-const UserCard = ({ browseList }) => (
+const UserCard = ({ browseList, handleClick }) => (
   <React.Fragment>
     {browseList.map(
-      card =>
+      user =>
         // do not render if user have no avatar
-        card.avatar ? (
+        user.avatar ? (
           <Card
-            title={`position:${card.title}`}
-            extra={`${card.username}`}
-            key={`key-${card.id}`}
+            title={`position:${user.title}`}
+            extra={`${user.username}`}
+            key={`key-${user._id}`}
           >
             <div className="left">
               <img
                 src={require(`../../global/AvatarSelector/images/${
-                  card.avatar
+                  user.avatar
                 }.png`)}
                 alt=""
               />
-              <p onClick={console.log("this.handleClick.bind(this, card)")}>
+              <br />
+              <a onClick={() => handleClick(user)}>
                 <Icon type="message" />
                 contact him/her
-              </p>
+              </a>
             </div>
             <div className="right">
-              {card.company ? <div>company: {card.company}</div> : null}
-              <b>{card.role === "boss" ? "requirement：" : "description: "}</b>
-              {card.desc.split("\n").map((desc, i) => (
+              {user.company ? <div>company: {user.company}</div> : null}
+              <b>{user.role === "boss" ? "requirement：" : "description: "}</b>
+              {user.desc.split("\n").map((desc, i) => (
                 <p key={desc + i}>{desc}</p>
               ))}
-              {card.salary ? <div>salary: {card.salary}</div> : null}
+              {user.salary ? <div>salary: {user.salary}</div> : null}
             </div>
           </Card>
         ) : null
@@ -39,6 +40,7 @@ const UserCard = ({ browseList }) => (
   </React.Fragment>
 );
 UserCard.propTypes = {
-  browseList: PropTypes.array.isRequired
+  browseList: PropTypes.array.isRequired,
+  handleClick: PropTypes.func.isRequired
 };
 export default UserCard;

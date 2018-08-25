@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import { validateForm } from "../../utils";
-import { FormLogo, InlineError, InfoNav } from "../global";
+import { FormLogo, InlineError, InfoNav, FormHOC } from "../global";
 import { userAction } from "../../actions";
 import { RegisterForm } from "./presentations";
 
@@ -126,7 +126,12 @@ const dispatchToProps = dispatch => ({
   }
 });
 
-export default connect(
-  stateToProps,
-  dispatchToProps
-)(RegisterPage);
+/* wrap around with a simple Form Higher Order Component 
+   for testing and playing with HOC, 
+   doesn't serve any real purpose */
+export default FormHOC(
+  connect(
+    stateToProps,
+    dispatchToProps
+  )(RegisterPage)
+);

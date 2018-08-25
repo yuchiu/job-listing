@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, Icon } from "antd";
 
+import "./UserCard.scss";
+
 const UserCard = ({ browseList, handleClick }) => (
   <React.Fragment>
     {browseList.map(
@@ -9,11 +11,12 @@ const UserCard = ({ browseList, handleClick }) => (
         // do not render if user have no avatar
         user.avatar ? (
           <Card
+            className="partner"
             title={`position:${user.title}`}
             extra={`${user.username}`}
             key={`key-${user._id}`}
           >
-            <div className="left">
+            <div className="partner-left">
               <img
                 src={require(`../../global/AvatarSelector/images/${
                   user.avatar
@@ -21,12 +24,15 @@ const UserCard = ({ browseList, handleClick }) => (
                 alt=""
               />
               <br />
-              <a onClick={() => handleClick(user)}>
+              <a
+                className="user-char-chat-with-p"
+                onClick={() => handleClick(user)}
+              >
                 <Icon type="message" />
                 contact him/her
               </a>
             </div>
-            <div className="right">
+            <div className="partner-right">
               {user.company ? <div>company: {user.company}</div> : null}
               <b>{user.role === "boss" ? "requirement：" : "description: "}</b>
               {user.desc.split("\n").map((desc, i) => (

@@ -1,0 +1,36 @@
+.user-char-chat-with-p {
+  cursor: pointer;
+  font-weight: bold;
+}
+.usercard-col {
+  margin-bottom: 10px;
+}
+
+.partner {
+  margin-bottom: 10px;
+
+  .ant-card-body {
+    display: flex;
+    height: 152px;
+  }
+}
+
+.partner-left {
+  img {
+    margin-bottom: 5px;
+  }
+  p {
+    position: relative;
+    top: 5px;
+  }
+}
+
+.partner-right {
+  flex: 1;
+  padding-left: 20px;
+  p {
+    word-break: break-all;
+    max-height: 86px;
+    overflow: hidden;
+  }
+}

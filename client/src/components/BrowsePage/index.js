@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { browseAction } from "../../actions";
 import { NavBar } from "../global";
 import { UserCard } from "./presentations";
+import "./index.scss";
 
 class BrowsePage extends React.Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ class BrowsePage extends React.Component {
   render() {
     const { browseList } = this.props;
     return (
-      <div>
+      <div className="browse-container">
         <NavBar />
         <UserCard browseList={browseList} handleClick={this.handleClick} />
       </div>

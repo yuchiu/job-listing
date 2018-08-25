@@ -2,12 +2,38 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
+import socketIo from "socket.io";
+import http from "http";
 
 import config from "../config";
 import routes from "./routes";
 
 import "./utils/passport";
 
+const app = express();
+/* connect express with socket.io, first wrap app with server, then wrap server with socket.io */
+const server = http.Server(app);
+const io = socketIo(server);
+
+io.on("connection", socket => {
+  console.log("user login");
+});
+
+/* express middleware */
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+routes(app);
+
+/* listen to port */
+server.listen(config.PORT, () => {
+  console.log(`app listenning on port ${config.PORT}`);
+});
+
+/* database setting */
 mongoose.connect(
   config.DB_LOCAL,
   { useNewUrlParser: true },
@@ -19,19 +45,3 @@ mongoose.connect(
     }
   }
 );
-
-const app = express();
-
-/* remove cors in production env */
-const corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
-routes(app);
-
-app.listen(config.PORT, () => {
-  console.log(`app listenning on port ${config.PORT}`);
-});

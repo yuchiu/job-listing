@@ -49,7 +49,7 @@ class NavBar extends React.Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="message">
-                <Link to="/message">
+                <Link to="/my-message">
                   <Icon type="message" />
                   My Message
                 </Link>

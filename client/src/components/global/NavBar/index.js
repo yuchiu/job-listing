@@ -1,13 +1,25 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Menu, Icon } from "antd";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { userAction } from "../../../actions";
+import "./index.scss";
 
 class NavBar extends React.Component {
-  handleClick = () => {
+  state = {
+    current: ""
+  };
+
+  handleClick = e => {
+    console.log("click ", e);
+    this.setState({
+      current: e.key
+    });
+  };
+
+  handleLogout = () => {
     const { logout, history } = this.props;
     logout();
     history.push("/");
@@ -16,47 +28,94 @@ class NavBar extends React.Component {
   render() {
     const { isUserAuthenticated, username } = this.props;
     return (
-      <div>
+      <div className="navbar-container">
         {isUserAuthenticated &&
           username && (
-            <div className="nav-bar">
-              <Link to="/">
-                <li>Job Hunting</li>
-              </Link>
-              <span>Hi! {username}</span>
-              <Link to="/browse">
-                <li>Browse</li>
-              </Link>
-              <Link to="/testing">
-                <li>testing</li>
-              </Link>
-              <Link to="/message">
-                <li>Message</li>
-              </Link>
-              <Link to="/my-profile">
-                <li>My Profile</li>
-              </Link>
-              <Button type="primary" onClick={this.handleClick}>
-                Log Out
-              </Button>
-            </div>
+            <Menu
+              onClick={this.handleClick}
+              selectedKeys={[this.state.current]}
+              mode="horizontal"
+            >
+              <Menu.Item key="home">
+                <Link to="/">
+                  <Icon type="home" />
+                  Job Hunting
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="browse">
+                <Link to="/browse">
+                  <Icon type="bars" />
+                  Browse
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="message">
+                <Link to="/message">
+                  <Icon type="message" />
+                  My Message
+                </Link>
+              </Menu.Item>
+              <Menu.SubMenu
+                style={{ float: "right" }}
+                title={
+                  <span>
+                    <Icon type="user" />
+                    {username}
+                  </span>
+                }
+              >
+                <Menu.ItemGroup title="User's Setting">
+                  <Menu.Item key="my-profile">
+                    <Link to="/my-profile">My Profile</Link>
+                  </Menu.Item>
+                  <Menu.Item key="edit-profile">
+                    <Link to="/my-profile">Edit Profile</Link>
+                  </Menu.Item>
+                </Menu.ItemGroup>
+                <Menu.ItemGroup title="______________">
+                  <Menu.Item key="logout">
+                    <p onClick={this.handleLogout}>Log Out</p>
+                  </Menu.Item>
+                </Menu.ItemGroup>
+              </Menu.SubMenu>
+            </Menu>
           )}
         {!isUserAuthenticated && (
-          <div className="nav-bar">
-            <Link to="/">
-              <li>Job Hunting</li>
-            </Link>
-            <Link to="/testing">
-              <li>testing</li>
-            </Link>
-            <span>Hi there!</span>
-            <Link to="/login">
-              <li>login</li>
-            </Link>
-            <Link to="/register">
-              <li>register</li>
-            </Link>
-          </div>
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[this.state.current]}
+            mode="horizontal"
+          >
+            <Menu.Item key="home">
+              <Link to="/">
+                <Icon type="home" />
+                Job Hunting
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="browse">
+              <Link to="/browse">
+                <Icon type="bars" />
+                Browse
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="testing">
+              <Link to="/testing">
+                <Icon type="appstore" />
+                testing
+              </Link>
+            </Menu.Item>
+            <Menu.Item style={{ float: "right" }}>
+              <Link to="/register">
+                <Icon type="user-add" />
+                register
+              </Link>
+            </Menu.Item>
+            <Menu.Item style={{ float: "right" }}>
+              <Link to="/login">
+                <Icon type="login" />
+                login
+              </Link>
+            </Menu.Item>
+          </Menu>
         )}
       </div>
     );

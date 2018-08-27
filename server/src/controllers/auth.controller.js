@@ -30,7 +30,7 @@ const userSummary = user => {
   return summary;
 };
 
-const noIdUserSummary = user => {
+const filterUserInfo = user => {
   const summary = {
     password: user.password,
     title: user.title,
@@ -159,8 +159,8 @@ const authController = {
       });
       delete updatedCredentials.newPassword;
       const validUser = await userModel.findOneAndUpdate(
-        user.id,
-        noIdUserSummary(updatedCredentials),
+        { email: user.email },
+        filterUserInfo(updatedCredentials),
         {
           new: true
         }

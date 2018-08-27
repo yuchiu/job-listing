@@ -4,8 +4,6 @@ const userSummary = user => {
   const summary = {
     id: user._id.toString(),
     username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
     email: user.email,
     role: user.role,
     title: user.title,
@@ -16,19 +14,25 @@ const userSummary = user => {
   };
   return summary;
 };
+const filterUserInfo = user => {
+  const summary = {
+    title: user.title,
+    desc: user.desc,
+    salary: user.salary,
+    avatar: user.avatar
+  };
+  return summary;
+};
 
 const userController = {
   followUp: async (req, res) => {
     try {
-      const followUpCredentials = req.body;
-
-      const user = await userModel.findOneAndUpdate(
-        followUpCredentials.id,
-        followUpCredentials,
-        {
-          new: true
-        }
-      );
+      const credentials = req.body;
+      // find user
+      const user = await userModel.findOne({
+        email: credentials.email
+      });
+      // if email is not yet registered
       if (!user) {
         return res.send({
           confirmation: false,
@@ -36,9 +40,16 @@ const userController = {
           message: "user does not exist"
         });
       }
+      const updatedUser = await userModel.findOneAndUpdate(
+        { email: user.email },
+        filterUserInfo(credentials),
+        {
+          new: true
+        }
+      );
       res.send({
         confirmation: true,
-        user: userSummary(user),
+        user: userSummary(updatedUser),
         message: "updated follow up successfully"
       });
     } catch (err) {

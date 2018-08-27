@@ -13,6 +13,7 @@ import GeniusFollowUpPage from "./GeniusFollowUpPage";
 import BrowsePage from "./BrowsePage";
 import MessagePage from "./MessagePage";
 import MyProfilePage from "./MyProfilePage";
+import EditProfilePage from "./EditProfilePage";
 import TestingPage from "./TestingPage";
 import NotFoundPage from "./NotFoundPage";
 
@@ -72,6 +73,11 @@ class Router extends React.Component {
             exact
             path="/my-profile"
             component={MyProfilePage}
+          />
+          <AuthenticatedRoute
+            exact
+            path="/edit-profile"
+            component={EditProfilePage}
           />
           <Route exact path="/:unfoundLocation" component={NotFoundPage} />
         </Switch>

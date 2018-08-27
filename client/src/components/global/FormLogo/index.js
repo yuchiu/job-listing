@@ -1,11 +1,11 @@
 import React from "react";
 
-import schoolLogo from "./school-logo.png";
+import Logo from "./job.png";
 import "./index.scss";
 
 const FormLogo = () => (
   <div className="logo-container">
-    <img src={schoolLogo} />
+    <img src={Logo} />
   </div>
 );
 

@@ -68,7 +68,7 @@ class NavBar extends React.Component {
                     <Link to="/my-profile">My Profile</Link>
                   </Menu.Item>
                   <Menu.Item key="edit-profile">
-                    <Link to="/my-profile">Edit Profile</Link>
+                    <Link to="/edit-profile">Edit Profile</Link>
                   </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup title="______________">

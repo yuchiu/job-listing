@@ -12,8 +12,8 @@ const UserCard = ({ browseList, handleClick }) => (
         user.avatar ? (
           <Card
             className="partner"
-            title={`position:${user.title}`}
-            extra={`${user.username}`}
+            title={`role: ${user.role}`}
+            extra={`username: ${user.username}`}
             key={`key-${user._id}`}
           >
             <div className="partner-left">
@@ -33,12 +33,26 @@ const UserCard = ({ browseList, handleClick }) => (
               </a>
             </div>
             <div className="partner-right">
-              {user.salry ? <div>salry: {user.salry}</div> : null}
+              {user.role === "boss" ? (
+                <div>
+                  <b>hiring position: </b>
+                  {user.title}
+                </div>
+              ) : (
+                <div>
+                  <b>looking for: </b>
+                  {user.title}
+                </div>
+              )}
+              {user.salary ? (
+                <div>
+                  <b>salary:</b> {user.salary}
+                </div>
+              ) : null}
               <b>{user.role === "boss" ? "requirement：" : "description: "}</b>
               {user.desc.split("\n").map((desc, i) => (
                 <p key={desc + i}>{desc}</p>
               ))}
-              {user.salary ? <div>salary: {user.salary}</div> : null}
             </div>
           </Card>
         ) : null

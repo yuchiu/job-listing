@@ -1,7 +1,9 @@
 import React from "react";
 import { Form, Icon, Input, Button } from "antd";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
+import "./EditProfile.scss";
 import { InlineError } from "../../global";
 
 const EditProfile = ({
@@ -9,16 +11,18 @@ const EditProfile = ({
   credentials,
   clientErrors,
   handleChange,
-  toggleEdit,
-  handleSave
+  handleSave,
+  history
 }) => (
   <Form className="info-container">
-    <img
-      src={require(`../../global/AvatarSelector/images/${user.avatar}.png`)}
-      alt=""
-    />
-    <div>username: {user.username}</div>
-    <div>username: {user.email}</div>
+    <div className="top-info">
+      <img
+        src={require(`../../global/AvatarSelector/images/${user.avatar}.png`)}
+        alt=""
+      />
+      <div>username: {user.username}</div>
+      <div>email: {user.email}</div>
+    </div>
     <Form.Item>
       <label htmlFor="password">Password:</label>
       {clientErrors.password && <InlineError text={clientErrors.password} />}
@@ -111,10 +115,21 @@ const EditProfile = ({
         />
       </Form.Item>
     )}
-    <Button size="large" type="primary" htmlType="submit" onClick={handleSave}>
+    <Button
+      size="large"
+      type="primary"
+      className="button1"
+      htmlType="submit"
+      onClick={handleSave}
+    >
       Save
     </Button>
-    <Button size="large" onClick={toggleEdit}>
+    <Button
+      size="large"
+      onClick={() => {
+        history.push("/my-profile");
+      }}
+    >
       Cancel
     </Button>
   </Form>
@@ -123,9 +138,9 @@ EditProfile.propTypes = {
   user: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired,
-  toggleEdit: PropTypes.func.isRequired,
   credentials: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   clientErrors: PropTypes.object.isRequired
 };
 
-export default EditProfile;
+export default withRouter(EditProfile);

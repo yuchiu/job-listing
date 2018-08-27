@@ -16,7 +16,11 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 io.on("connection", socket => {
-  console.log("user login");
+  console.log("socket io connected");
+  socket.on("sendMsg", data => {
+    console.log(data);
+    io.emit("receiveMsg", data);
+  });
 });
 
 /* express middleware */

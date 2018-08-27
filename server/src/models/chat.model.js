@@ -1,9 +1,19 @@
 import mongoose from "mongoose";
 
 const ChatSchema = mongoose.Schema({
-  message: {
+  chatid: { type: String, require: true },
+  from: { type: String, require: true },
+  to: { type: String, require: true },
+  read: { type: Boolean, default: false },
+  content: {
     type: String,
-    maxlength: 1280
+    require: true,
+    default: "",
+    maxlength: 255
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
   }
 });
 

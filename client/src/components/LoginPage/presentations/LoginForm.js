@@ -14,7 +14,9 @@ const LoginForm = ({
   <Form className="login-form">
     <Form.Item>
       <label htmlFor="email">Email</label>
-      {clientErrors.email && <InlineError text={clientErrors.email} />}
+      {clientErrors.email && (
+        <InlineError className="avatar-msg" text={clientErrors.email} />
+      )}
       <Input
         prefix={<Icon type="mail" />}
         id="email"

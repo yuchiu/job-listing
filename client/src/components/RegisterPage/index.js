@@ -7,6 +7,7 @@ import { validateForm } from "../../utils";
 import { FormLogo, InlineError, InfoNav, FormHOC } from "../global";
 import { userAction } from "../../actions";
 import { RegisterForm } from "./presentations";
+import "./index.scss";
 
 class RegisterPage extends React.Component {
   state = {
@@ -87,7 +88,7 @@ class RegisterPage extends React.Component {
     const { credentials, clientErrors } = this.state;
     const { isUserAuthenticated, user, message } = this.props;
     return (
-      <div className="register-page">
+      <div className="login-register-container">
         {isUserAuthenticated &&
           user.role && <Redirect to={this.redirectTo(user)} />}
         <InfoNav name="there" text=" " />

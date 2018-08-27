@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import { userAction } from "../../actions";
-import { InfoNav, InlineError } from "../global";
-import { auth } from "../../utils";
+import { InfoNav } from "../global";
+import { auth, validateForm } from "../../utils";
 import { FollowUpForm } from "./presentations";
 
 class BossFollowUpPage extends React.Component {
@@ -55,18 +55,18 @@ class BossFollowUpPage extends React.Component {
     const userId = auth.getUserId();
     const { followUpCredentials } = this.state;
     const { followupUserInfo } = this.props;
-    followupUserInfo(followUpCredentials, userId);
+
+    const clientErrors = validateForm.bossFollowUp(followUpCredentials);
+    this.setState({ clientErrors });
+    if (Object.keys(clientErrors).length === 0) {
+      followupUserInfo(followUpCredentials, userId);
+    }
   };
 
   render() {
     const username = auth.getUsername();
-    const { followUpCredentials } = this.state;
-    const {
-      isUserAuthenticated,
-      message,
-      user,
-      location: { pathname }
-    } = this.props;
+    const { followUpCredentials, clientErrors } = this.state;
+    const { isUserAuthenticated, message, user } = this.props;
     return (
       <div>
         {!isUserAuthenticated && <Redirect to="/login" />}
@@ -80,9 +80,10 @@ class BossFollowUpPage extends React.Component {
           handleChange={this.handleChange}
           followUpCredentials={followUpCredentials}
           handleSubmit={this.handleSubmit}
+          message={message}
+          clientErrors={clientErrors}
         />
         <br />
-        {message && <InlineError text={message} />}
       </div>
     );
   }
@@ -91,8 +92,7 @@ BossFollowUpPage.propTypes = {
   followupUserInfo: PropTypes.func.isRequired,
   user: PropTypes.object,
   isUserAuthenticated: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  location: PropTypes.object.isRequired
+  message: PropTypes.string.isRequired
 };
 const stateToProps = state => ({
   isUserAuthenticated: state.userReducer.isUserAuthenticated,

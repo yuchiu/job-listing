@@ -34,6 +34,54 @@ export default {
     }
     return clientErrors;
   },
+  bossFollowUp: data => {
+    const clientErrors = {};
+    if (!data.avatar) {
+      clientErrors.avatar = "Can't be blank";
+    }
+    if (!data.title) {
+      clientErrors.title = "Can't be blank";
+    } else if (data.title.length < 1 || data.title.length > 50) {
+      clientErrors.title = "Length of title can not be more than 50 characters";
+    }
+    if (!data.desc) {
+      clientErrors.desc = "Can't be blank";
+    } else if (data.desc.length < 1 || data.desc.length > 100) {
+      clientErrors.desc =
+        "Length of description can not be more than 100 characers";
+    }
+    if (!data.company) {
+      clientErrors.company = "Can't be blank";
+    } else if (data.company.length < 1 || data.company.length > 50) {
+      clientErrors.company =
+        "Length of company can not be more than 50 characers";
+    }
+    if (!data.salary) {
+      clientErrors.salary = "Can't be blank";
+    } else if (data.salary.length < 1 || data.salary.length > 50) {
+      clientErrors.salary =
+        "Length of salary can not be more than 50 characers";
+    }
+    return clientErrors;
+  },
+  geniusFollowUp: data => {
+    const clientErrors = {};
+    if (!data.avatar) {
+      clientErrors.avatar = "Can't be blank";
+    }
+    if (!data.title) {
+      clientErrors.title = "Can't be blank";
+    } else if (data.title.length < 1 || data.title.length > 50) {
+      clientErrors.title = "Length of title can not be more than 50 characters";
+    }
+    if (!data.desc) {
+      clientErrors.desc = "Can't be blank";
+    } else if (data.desc.length < 1 || data.desc.length > 100) {
+      clientErrors.desc =
+        "Length of description can not be more than 100 characers";
+    }
+    return clientErrors;
+  },
   editProfile: data => {
     const clientErrors = {};
     if (!data.password) {

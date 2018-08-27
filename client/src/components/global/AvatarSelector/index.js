@@ -1,11 +1,12 @@
 import React from "react";
 import { Row, Col, Button } from "antd";
 import PropTypes from "prop-types";
-import "./index.css";
+import "./index.scss";
 
 class AvatarSelector extends React.Component {
   state = {
     icon: "",
+    clientErrors: "",
     text: "",
     clientWidth: document.body.clientWidth
   };

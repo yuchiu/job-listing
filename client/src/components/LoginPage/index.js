@@ -7,6 +7,7 @@ import { validateForm } from "../../utils";
 import { FormLogo, InlineError, InfoNav } from "../global";
 import { userAction } from "../../actions";
 import { LoginForm } from "./presentations";
+import "./index.scss";
 
 class LoginPage extends React.Component {
   state = {
@@ -43,16 +44,12 @@ class LoginPage extends React.Component {
 
   handleLogin = e => {
     e.preventDefault();
-
-    const {
-      credentials,
-      credentials: { email, password }
-    } = this.state;
+    const { login } = this.props;
+    const { credentials } = this.state;
 
     const clientErrors = validateForm.signIn(credentials);
     this.setState({ clientErrors });
     if (Object.keys(clientErrors).length === 0) {
-      const { login } = this.props;
       login(credentials);
     }
   };
@@ -76,7 +73,7 @@ class LoginPage extends React.Component {
     const { clientErrors, credentials } = this.state;
     const { isUserAuthenticated, message, user } = this.props;
     return (
-      <div className="login-page">
+      <div className="login-register-container">
         {isUserAuthenticated &&
           user.role && <Redirect to={this.redirectTo(user)} />}
         <InfoNav name="there" text=" " />

@@ -14,7 +14,7 @@ const authService = {
     const payload = await API().post(`/auth/update-profile`, credentials);
     return payload.data;
   },
-  followupUser: async (followUpCredentials, userId) => {
+  followupUser: async followUpCredentials => {
     const payload = await API().post(`/user/followup`, followUpCredentials);
     return payload.data;
   }

@@ -14,12 +14,13 @@ const FollowUpForm = ({
   message
 }) => (
   <React.Fragment>
+    {clientErrors.avatar && (
+      <p className="avatar-msg">
+        <InlineError text={clientErrors.avatar} />
+      </p>
+    )}
+    <AvatarSelector selectAvatar={selectAvatar} />
     <div className="info-container">
-      {clientErrors.avatar && (
-        <p className="avatar-msg">
-          <InlineError text={clientErrors.avatar} />
-        </p>
-      )}
       <h2>Please fill out the requirements for the hiring position:</h2>
       <label>Hiring Position:</label>
       {clientErrors.title && <InlineError text={clientErrors.title} />}
@@ -28,15 +29,6 @@ const FollowUpForm = ({
         size="large"
         name="title"
         value={followUpCredentials.title}
-        onChange={handleChange}
-      />
-      <label>Company:</label>
-      {clientErrors.company && <InlineError text={clientErrors.company} />}
-      <Input
-        placeholder="company"
-        size="large"
-        name="company"
-        value={followUpCredentials.company}
         onChange={handleChange}
       />
       <label>Salary Range:</label>

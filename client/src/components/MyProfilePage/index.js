@@ -14,7 +14,6 @@ class MyProfilePage extends React.Component {
       password: "",
       newPassword: "",
       title: "",
-      company: "",
       salary: "",
       desc: ""
     },
@@ -27,7 +26,6 @@ class MyProfilePage extends React.Component {
         password: "",
         newPassword: "",
         title: "",
-        company: "",
         salary: "",
         desc: ""
       }
@@ -66,7 +64,6 @@ class MyProfilePage extends React.Component {
         password: "",
         newPassword: "",
         title: "",
-        company: "",
         salary: "",
         desc: ""
       }

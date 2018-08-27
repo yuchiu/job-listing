@@ -33,7 +33,7 @@ const UserCard = ({ browseList, handleClick }) => (
               </a>
             </div>
             <div className="partner-right">
-              {user.company ? <div>company: {user.company}</div> : null}
+              {user.salry ? <div>salry: {user.salry}</div> : null}
               <b>{user.role === "boss" ? "requirement：" : "description: "}</b>
               {user.desc.split("\n").map((desc, i) => (
                 <p key={desc + i}>{desc}</p>

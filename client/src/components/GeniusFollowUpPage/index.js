@@ -13,6 +13,7 @@ class GeniusFollowUpPage extends React.Component {
     clientErrors: {},
     followUpCredentials: {
       title: "",
+      salary: "",
       desc: "",
       avatar: ""
     }
@@ -22,6 +23,7 @@ class GeniusFollowUpPage extends React.Component {
     this.setState({
       followUpCredentials: {
         title: "",
+        salary: "",
         desc: "",
         avatar: ""
       }
@@ -48,14 +50,16 @@ class GeniusFollowUpPage extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const userId = auth.getUserId();
     const { followUpCredentials } = this.state;
-    const { followupUserInfo } = this.props;
+    const { followupUserInfo, user } = this.props;
 
     const clientErrors = validateForm.geniusFollowUp(followUpCredentials);
     this.setState({ clientErrors });
     if (Object.keys(clientErrors).length === 0) {
-      followupUserInfo(followUpCredentials, userId);
+      const includeEmailCredentials = Object.assign({}, followUpCredentials, {
+        email: user.email
+      });
+      followupUserInfo(includeEmailCredentials);
     }
   };
 

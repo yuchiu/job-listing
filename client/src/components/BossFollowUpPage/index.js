@@ -13,7 +13,6 @@ class BossFollowUpPage extends React.Component {
     clientErrors: {},
     followUpCredentials: {
       title: "",
-      company: "",
       salary: "",
       desc: "",
       avatar: ""
@@ -24,7 +23,6 @@ class BossFollowUpPage extends React.Component {
     this.setState({
       followUpCredentials: {
         title: "",
-        company: "",
         salary: "",
         desc: "",
         avatar: ""
@@ -52,14 +50,16 @@ class BossFollowUpPage extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const userId = auth.getUserId();
     const { followUpCredentials } = this.state;
-    const { followupUserInfo } = this.props;
+    const { followupUserInfo, user } = this.props;
 
     const clientErrors = validateForm.bossFollowUp(followUpCredentials);
     this.setState({ clientErrors });
     if (Object.keys(clientErrors).length === 0) {
-      followupUserInfo(followUpCredentials, userId);
+      const includeEmailCredentials = Object.assign({}, followUpCredentials, {
+        email: user.email
+      });
+      followupUserInfo(includeEmailCredentials);
     }
   };
 

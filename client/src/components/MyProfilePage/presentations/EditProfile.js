@@ -77,18 +77,6 @@ const EditProfile = ({
     )}
     {user.role === "boss" && (
       <Form.Item>
-        <label>Company:</label>
-        <Input
-          placeholder={user.company}
-          size="large"
-          name="company"
-          value={credentials.company}
-          onChange={handleChange}
-        />
-      </Form.Item>
-    )}
-    {user.role === "boss" && (
-      <Form.Item>
         <label>Salary Range:</label>
         <Input
           placeholder={user.salary}

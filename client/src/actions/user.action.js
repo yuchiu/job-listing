@@ -17,23 +17,16 @@ const authAction = {
       payload: response
     });
   },
-  followupUserInfo: (followUpCredentials, userId) => async dispatch => {
-    const response = await authService.followupUser(
-      followUpCredentials,
-      userId
-    );
+  followupUserInfo: followUpCredentials => async dispatch => {
+    const response = await authService.followupUser(followUpCredentials);
+    console.log(response);
     dispatch({
       type: constants.LOGIN,
       payload: response
     });
   },
   editProfile: credentials => async dispatch => {
-    console.log("action in side");
-    console.log(credentials);
-
     const response = await authService.editProfileRequest(credentials);
-    console.log("response in side");
-    console.log(response);
     dispatch({
       type: constants.EDIT_PROFILE,
       payload: response

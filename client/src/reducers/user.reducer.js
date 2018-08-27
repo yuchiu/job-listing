@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
   const newState = Object.assign({}, state);
   switch (action.type) {
     case constants.LOGIN:
+      console.log(action.payload);
       if (action.payload.confirmation) {
         auth.authenticateUser(action.payload.token, action.payload.user);
         newState.isUserAuthenticated = auth.isUserAuthenticated();

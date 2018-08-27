@@ -50,12 +50,6 @@ export default {
       clientErrors.desc =
         "Length of description can not be more than 100 characers";
     }
-    if (!data.company) {
-      clientErrors.company = "Can't be blank";
-    } else if (data.company.length < 1 || data.company.length > 50) {
-      clientErrors.company =
-        "Length of company can not be more than 50 characers";
-    }
     if (!data.salary) {
       clientErrors.salary = "Can't be blank";
     } else if (data.salary.length < 1 || data.salary.length > 50) {

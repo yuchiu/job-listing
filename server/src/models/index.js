@@ -1,4 +1,4 @@
 import userModel from "./user.model";
-import chatModel from "./chat.model";
+import messageModel from "./message.model";
 
-export { userModel, chatModel };
+export { userModel, messageModel };

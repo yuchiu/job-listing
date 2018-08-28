@@ -1,3 +1,3 @@
-import { authPolicy } from "./policies";
+import { registerPolicy, authPolicy } from "./policies";
 
-export { authPolicy };
+export { registerPolicy, authPolicy };

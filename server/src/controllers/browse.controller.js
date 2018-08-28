@@ -1,6 +1,6 @@
 import { userModel } from "../models";
 
-const testController = {
+const browseController = {
   getBrowseList: async (req, res) => {
     try {
       const browseList = await userModel.find();
@@ -19,4 +19,4 @@ const testController = {
     }
   }
 };
-export default testController;
+export default browseController;

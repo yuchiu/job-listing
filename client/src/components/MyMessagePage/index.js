@@ -1,8 +1,10 @@
 import React from "react";
 import io from "socket.io-client";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Button } from "antd";
 
+import { messageAction } from "../../actions";
 import { NavBar } from "../global";
 
 const socket = io("ws://localhost:3200");
@@ -14,6 +16,8 @@ class MyMessagePage extends React.Component {
   };
 
   componentDidMount() {
+    const { getMsgList } = this.props;
+    getMsgList();
     socket.on("receiveMsg", data => {
       this.setState({
         messages: [...this.state.messages, data.text]
@@ -67,7 +71,18 @@ class MyMessagePage extends React.Component {
 }
 
 MyMessagePage.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  getMsgList: PropTypes.func.isRequired
 };
+const stateToProps = state => ({ messageReducer: state.messageReducer });
 
-export default MyMessagePage;
+const dispatchToProps = dispatch => ({
+  getMsgList: () => {
+    dispatch(messageAction.getMsgList());
+  }
+});
+
+export default connect(
+  stateToProps,
+  dispatchToProps
+)(MyMessagePage);

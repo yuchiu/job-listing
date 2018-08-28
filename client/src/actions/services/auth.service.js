@@ -1,6 +1,10 @@
 import API from "./API";
 
 const authService = {
+  autoLogin: async () => {
+    const payload = await API().get(`/auth/auto-login`);
+    return payload;
+  },
   registerUser: async credentials => {
     const payload = await API().post(`/auth/register`, credentials);
     return payload;

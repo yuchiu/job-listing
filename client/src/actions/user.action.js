@@ -2,6 +2,15 @@ import constants from "../constants";
 import { authService } from "./services";
 
 const authAction = {
+  autoLogin: () => async dispatch => {
+    const response = await authService.autoLogin();
+    const { data } = response;
+    dispatch({
+      type: constants.AUTO_LOGIN,
+      payload: data
+    });
+  },
+
   register: credentials => async dispatch => {
     try {
       const response = await authService.registerUser(credentials);

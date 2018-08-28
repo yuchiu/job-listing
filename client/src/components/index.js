@@ -16,7 +16,7 @@ import MyProfilePage from "./MyProfilePage";
 import EditProfilePage from "./EditProfilePage";
 import TestingPage from "./TestingPage";
 import NotFoundPage from "./NotFoundPage";
-import AutoRoute from "./AutoRoute";
+import AutoLogin from "./AutoLogin";
 
 // eslint-disable-next-line
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
@@ -51,7 +51,7 @@ class Router extends React.Component {
       <BrowserRouter>
         <React.Fragment>
           {/* auto log in user if auth info exist */}
-          <AutoRoute />
+          <AutoLogin />
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/browse" component={BrowsePage} />

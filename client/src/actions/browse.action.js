@@ -1,14 +1,14 @@
 import constants from "../constants";
 import { browseService } from "./services";
 
-const authAction = {
+const browseAction = {
   fetchList: () => async dispatch => {
     const response = await browseService.fetchList();
     dispatch({
       type: constants.FETCH_LIST,
-      payload: response
+      payload: response.data
     });
   }
 };
 
-export default authAction;
+export default browseAction;

@@ -15,34 +15,25 @@ const initialState = defineState(defaultState)("userReducer");
 export default (state = initialState, action) => {
   const newState = Object.assign({}, state);
   switch (action.type) {
+    case constants.AUTH_ERROR:
+      newState.message = action.payload.message;
+      return newState;
     case constants.LOGIN:
-      if (action.payload.confirmation) {
-        auth.authenticateUser(action.payload.token, action.payload.user);
-        newState.isUserAuthenticated = auth.isUserAuthenticated();
-        newState.user = action.payload.user;
-        newState.message = action.payload.message;
-      } else {
-        newState.isUserAuthenticated = auth.isUserAuthenticated();
-        newState.user = state.user;
-        newState.message = action.payload.message;
-      }
+      auth.authenticateUser(action.payload.token, action.payload.user);
+      newState.isUserAuthenticated = auth.isUserAuthenticated();
+      newState.user = action.payload.user;
+      newState.message = "";
       return newState;
     case constants.LOGOUT:
       auth.deauthenticateUser();
-      newState.isUserAuthenticated = false;
+      newState.isUserAuthenticated = auth.isUserAuthenticated();
       newState.user = {};
-      newState.message = "log out successfully";
+      newState.message = "";
       return newState;
     case constants.EDIT_PROFILE:
-      if (action.payload.confirmation) {
-        newState.isProfileUpdated = action.payload.confirmation;
-        newState.user = action.payload.user;
-        newState.message = action.payload.message;
-      } else {
-        newState.isProfileUpdated = action.payload.confirmation;
-        newState.user = state.user;
-        newState.message = action.payload.message;
-      }
+      newState.isProfileUpdated = true;
+      newState.user = action.payload.user;
+      newState.message = "";
       return newState;
     default:
       return state;

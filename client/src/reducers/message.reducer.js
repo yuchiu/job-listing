@@ -2,7 +2,8 @@ import constants from "../constants";
 
 const initialState = {
   msgList: [],
-  unread: 0
+  unread: 0,
+  message: ""
 };
 
 export default (state = initialState, action) => {
@@ -10,9 +11,13 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.GET_MSG:
       newState.msgList = newState.msgList
-        ? newState.msgList.concat(action.payload.data.msgList)
-        : action.payload.data.msgList;
-      newState.unread = action.payload.data.msgList.filter(m => !m.read).length;
+        ? newState.msgList.concat(action.payload.msgList)
+        : action.payload.msgList;
+      newState.unread = action.payload.msgList.filter(m => !m.read).length;
+      newState.message = "";
+      return newState;
+    case constants.MSG_ERROR:
+      newState.message = action.payload.message;
       return newState;
     // case constants.RECEIVE_MSG:
     //   newState.browseList = action.payload.browseList;

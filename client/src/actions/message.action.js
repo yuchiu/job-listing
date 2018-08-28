@@ -11,11 +11,20 @@ const messageAction = {
   //   },
 
   getMsgList: () => async dispatch => {
-    const response = await messageService.getMsgList();
-    dispatch({
-      type: constants.GET_MSG,
-      payload: response
-    });
+    try {
+      const response = await messageService.getMsgList();
+      const { data } = response;
+      dispatch({
+        type: constants.GET_MSG,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.MSG_ERROR,
+        payload: data
+      });
+    }
   }
 };
 

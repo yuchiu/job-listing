@@ -16,6 +16,7 @@ import MyProfilePage from "./MyProfilePage";
 import EditProfilePage from "./EditProfilePage";
 import TestingPage from "./TestingPage";
 import NotFoundPage from "./NotFoundPage";
+import AutoRoute from "./AutoRoute";
 
 // eslint-disable-next-line
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
@@ -48,39 +49,43 @@ class Router extends React.Component {
       <h2>Error occured while rendering this page</h2>
     ) : (
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/browse" component={BrowsePage} />
-          <Route exact path="/testing" component={TestingPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <AuthenticatedRoute
-            exact
-            path="/bossfollowup"
-            component={BossFollowUpPage}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/geniusfollowup"
-            component={GeniusFollowUpPage}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/my-message/:user"
-            component={MyMessagePage}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/my-profile"
-            component={MyProfilePage}
-          />
-          <AuthenticatedRoute
-            exact
-            path="/edit-profile"
-            component={EditProfilePage}
-          />
-          <Route exact path="/:unfoundLocation" component={NotFoundPage} />
-        </Switch>
+        <React.Fragment>
+          {/* auto log in user if auth info exist */}
+          <AutoRoute />
+          <Switch>
+            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/browse" component={BrowsePage} />
+            <Route exact path="/testing" component={TestingPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <AuthenticatedRoute
+              exact
+              path="/bossfollowup"
+              component={BossFollowUpPage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/geniusfollowup"
+              component={GeniusFollowUpPage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/my-message/:user"
+              component={MyMessagePage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/my-profile"
+              component={MyProfilePage}
+            />
+            <AuthenticatedRoute
+              exact
+              path="/edit-profile"
+              component={EditProfilePage}
+            />
+            <Route exact path="/:unfoundLocation" component={NotFoundPage} />
+          </Switch>
+        </React.Fragment>
       </BrowserRouter>
     );
   }

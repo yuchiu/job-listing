@@ -41,6 +41,22 @@ const filterUserInfo = user => {
 };
 
 const authController = {
+  autoLogin: async (req, res) => {
+    try {
+      // req.user is retreived from auth.policy
+      const userId = req.user.id;
+      const user = await userModel.findOne({
+        _id: userId
+      });
+
+      res.status(200).send({
+        confirmation: true,
+        user: userSummary(user)
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  },
   register: async (req, res) => {
     try {
       const credentials = req.body;

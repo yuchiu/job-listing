@@ -10,6 +10,7 @@ import { registerPolicy, authPolicy } from "../policies";
 const routes = app => {
   app.get("/test", testController.getTest);
 
+  app.get("/auth/auto-login", authPolicy, authController.autoLogin);
   app.post("/auth/register", registerPolicy.register, authController.register);
   app.post("/auth/login", authController.login);
   app.post("/auth/update-profile", authController.updateProfile);

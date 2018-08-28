@@ -8,14 +8,14 @@ const messageController = {
       console.log("userId:");
       console.log(userId);
       const msgList = await messageModel.find();
-      res.json({
+      res.status(200).send({
         confirmation: true,
         msgList,
         message: "get message list success!"
       });
     } catch (err) {
       console.log(err);
-      return res.json({
+      return res.status(500).json({
         confirmation: false,
         msgList: [],
         message: "error occured while fetching message list"

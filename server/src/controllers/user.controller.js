@@ -34,7 +34,7 @@ const userController = {
       });
       // if email is not yet registered
       if (!user) {
-        return res.send({
+        return res.status(403).send({
           confirmation: false,
           user: {},
           message: "user does not exist"
@@ -47,14 +47,14 @@ const userController = {
           new: true
         }
       );
-      res.send({
+      res.status(200).send({
         confirmation: true,
         user: userSummary(updatedUser),
         message: "updated follow up successfully"
       });
     } catch (err) {
       console.log(err);
-      return res.send({
+      return res.status(500).send({
         confirmation: false,
         user: {},
         message: "an error has occured trying to update follow up"

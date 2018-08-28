@@ -4,16 +4,14 @@ const browseController = {
   getBrowseList: async (req, res) => {
     try {
       const browseList = await userModel.find();
-      res.json({
+      res.status(200).send({
         confirmation: true,
-        browseList,
-        message: "test success!"
+        browseList
       });
     } catch (err) {
       console.log(err);
-      return res.json({
+      return res.status(500).send({
         confirmation: false,
-        browseList: [],
         message: "error occured while fetching browse list"
       });
     }

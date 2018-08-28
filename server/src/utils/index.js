@@ -1,3 +1,3 @@
-import { registerPolicy, authPolicy } from "./policies";
+import passport from "./passport";
 
-export { registerPolicy, authPolicy };
+export { passport };

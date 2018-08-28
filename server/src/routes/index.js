@@ -5,7 +5,7 @@ import {
   browseController,
   messageController
 } from "../controllers";
-import { registerPolicy, authPolicy } from "../utils";
+import { registerPolicy, authPolicy } from "../policies";
 
 const routes = app => {
   app.get("/test", testController.getTest);

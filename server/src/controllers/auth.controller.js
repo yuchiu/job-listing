@@ -48,9 +48,8 @@ const authController = {
         email: credentials.email
       });
       if (isUserCreated) {
-        return res.send({
+        return res.status(403).send({
           confirmation: false,
-          user: {},
           message: "email address is not valid"
         });
       }
@@ -58,15 +57,14 @@ const authController = {
       // hash password & create user
       credentials.password = bcrypt.hashSync(credentials.password, 10);
       const user = await userModel.create(credentials);
-      res.send({
+      res.status(200).send({
         confirmation: true,
         user: userSummary(user),
-        token: jwtSignUser(user),
-        message: "registered successfully"
+        token: jwtSignUser(user)
       });
     } catch (err) {
       console.log(err);
-      return res.send({
+      return res.status(500).send({
         confirmation: false,
         message: "an error has occured trying to register"
       });
@@ -81,9 +79,8 @@ const authController = {
 
       // if email is not yet registered
       if (!user) {
-        return res.send({
+        return res.status(403).send({
           confirmation: false,
-          user: {},
           message: `this email account ${
             credentials.email
           } is not yet registered`
@@ -96,25 +93,22 @@ const authController = {
         user.password
       );
       if (!isPasswordValid) {
-        return res.send({
+        return res.status(403).send({
           confirmation: false,
-          user: {},
           message: "invalid password"
         });
       }
 
       // user is validated
-      res.send({
+      res.status(200).send({
         confirmation: true,
         user: userSummary(user),
-        token: jwtSignUser(user),
-        message: "sign in successfully"
+        token: jwtSignUser(user)
       });
     } catch (err) {
       console.log(err);
-      return res.send({
+      return res.status(500).send({
         confirmation: false,
-        user: {},
         message: "an error has occured trying to login"
       });
     }
@@ -130,9 +124,8 @@ const authController = {
 
       // if email is not yet registered
       if (!user) {
-        return res.send({
+        return res.status(403).send({
           confirmation: false,
-          user: {},
           message: "user does not exist"
         });
       }
@@ -143,9 +136,8 @@ const authController = {
         user.password
       );
       if (!isPasswordValid) {
-        return res.send({
+        return res.status(403).send({
           confirmation: false,
-          user: {},
           message: "invalid password"
         });
       }
@@ -165,14 +157,13 @@ const authController = {
           new: true
         }
       );
-      res.send({
+      res.status(200).send({
         confirmation: true,
-        user: userSummary(validUser),
-        message: "updated user profile succesfully"
+        user: userSummary(validUser)
       });
     } catch (err) {
       console.log(err);
-      return res.send({
+      return res.status(500).send({
         confirmation: false,
         message: "an error has occured trying to update Profile"
       });

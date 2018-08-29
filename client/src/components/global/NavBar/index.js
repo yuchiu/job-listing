@@ -1,16 +1,21 @@
 import React from "react";
-import { Button, Menu, Icon } from "antd";
-import { Link, withRouter, Redirect } from "react-router-dom";
+import { Menu, Icon, Badge } from "antd";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { userAction } from "../../../actions";
+import { userAction, messageAction } from "../../../actions";
 import "./index.scss";
 
 class NavBar extends React.Component {
   state = {
     current: ""
   };
+
+  componentDidMount() {
+    const { getMsgList } = this.props;
+    getMsgList();
+  }
 
   handleClick = e => {
     this.setState({
@@ -25,7 +30,7 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { isUserAuthenticated, username } = this.props;
+    const { isUserAuthenticated, username, unread } = this.props;
     return (
       <div className="navbar-container">
         {isUserAuthenticated &&
@@ -51,6 +56,7 @@ class NavBar extends React.Component {
                 <Link to="/my-message">
                   <Icon type="message" />
                   My Message
+                  <Badge count={unread} />
                 </Link>
               </Menu.Item>
               <Menu.SubMenu
@@ -125,14 +131,20 @@ NavBar.propTypes = {
   isUserAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
+  unread: PropTypes.number.isRequired,
+  getMsgList: PropTypes.func.isRequired,
   username: PropTypes.string
 };
 
 const stateToProps = state => ({
   isUserAuthenticated: state.userReducer.isUserAuthenticated,
+  unread: state.messageReducer.unread,
   username: state.userReducer.user.username
 });
 const dispatchToProps = dispatch => ({
+  getMsgList: () => {
+    dispatch(messageAction.getMsgList());
+  },
   logout: () => {
     dispatch(userAction.logout());
   }

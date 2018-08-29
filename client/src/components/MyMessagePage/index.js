@@ -14,7 +14,7 @@ class MyMessagePage extends React.Component {
     text: ""
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { getMsgList, receiveMsg } = this.props;
     getMsgList();
     receiveMsg();
@@ -58,7 +58,16 @@ class MyMessagePage extends React.Component {
         <NavBar />
         {user.id}
         MyMessagePage page. chating with user: {toUserId}
-        {msgList.map((m, i) => (m.content ? <p key={i}>{m.content}</p> : null))}
+        {msgList.map(
+          m =>
+            m._id === user.id ? (
+              <p key={m._id} className="my-msg">
+                Me: {m.content}
+              </p>
+            ) : (
+              <p key={m._id}>{m.content}</p>
+            )
+        )}
         <textarea
           className="chat-textarea"
           onChange={this.handleChange}

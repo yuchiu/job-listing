@@ -9,6 +9,7 @@ import config from "../config";
 import routes from "./routes";
 
 import "./utils/passport";
+import { messageModel } from "./models";
 
 const app = express();
 /* connect express with socket.io, first wrap app with server, then wrap server with socket.io */
@@ -18,8 +19,21 @@ const io = socketIo(server);
 io.on("connection", socket => {
   console.log("socket io connected");
   socket.on("sendMsg", data => {
-    console.log(data);
-    io.emit("receiveMsg", data);
+    const { fromUserId, toUserId, text } = data;
+    const chatId = [fromUserId, toUserId].sort().join("_");
+    console.log(chatId);
+    messageModel.create(
+      {
+        from: fromUserId,
+        chatid: chatId,
+        to: toUserId,
+        content: text
+      },
+      (err, doc) => {
+        console.log(doc);
+        io.emit("receiveMsg", Object.assign({}, doc._doc));
+      }
+    );
   });
 });
 

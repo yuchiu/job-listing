@@ -18,7 +18,6 @@ class AutoLogin extends React.Component {
 AutoLogin.propTypes = {
   autoLogin: PropTypes.func.isRequired
 };
-const stateToProps = () => ({});
 
 const dispatchToProps = dispatch => ({
   autoLogin: () => {
@@ -27,6 +26,6 @@ const dispatchToProps = dispatch => ({
 });
 
 export default connect(
-  stateToProps,
+  null,
   dispatchToProps
 )(AutoLogin);

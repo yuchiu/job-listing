@@ -70,7 +70,7 @@ class Router extends React.Component {
             />
             <AuthenticatedRoute
               exact
-              path="/my-message/:user"
+              path="/my-message/:toUserId"
               component={MyMessagePage}
             />
             <AuthenticatedRoute

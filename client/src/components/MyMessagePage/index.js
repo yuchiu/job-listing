@@ -11,18 +11,13 @@ const socket = io("ws://localhost:3200");
 
 class MyMessagePage extends React.Component {
   state = {
-    text: "",
-    messages: []
+    text: ""
   };
 
-  componentDidMount() {
-    const { getMsgList } = this.props;
+  async componentDidMount() {
+    const { getMsgList, receiveMsg } = this.props;
     getMsgList();
-    socket.on("receiveMsg", data => {
-      this.setState({
-        messages: [...this.state.messages, data.text]
-      });
-    });
+    receiveMsg();
   }
 
   handleChange = e => {
@@ -34,21 +29,36 @@ class MyMessagePage extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     const { text } = this.state;
-    socket.emit("sendMsg", { text });
+    const {
+      sendMsg,
+      user,
+      match: {
+        params: { toUserId }
+      }
+    } = this.props;
+    const fromUserId = user.id;
+    sendMsg({ fromUserId, toUserId, text });
     this.setState({
       text: ""
     });
   };
 
   render() {
-    const { text, messages } = this.state;
+    const { text } = this.state;
+
+    const {
+      user,
+      msgList,
+      match: {
+        params: { toUserId }
+      }
+    } = this.props;
     return (
       <div>
         <NavBar />
-        MyMessagePage page. chating with user: {this.props.match.params.user}
-        {messages.map((m, i) => (
-          <p key={i}>{m}</p>
-        ))}
+        {user.id}
+        MyMessagePage page. chating with user: {toUserId}
+        {msgList.map((m, i) => (m.content ? <p key={i}>{m.content}</p> : null))}
         <textarea
           className="chat-textarea"
           onChange={this.handleChange}
@@ -71,14 +81,27 @@ class MyMessagePage extends React.Component {
 }
 
 MyMessagePage.propTypes = {
+  user: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  getMsgList: PropTypes.func.isRequired
+  msgList: PropTypes.array.isRequired,
+  getMsgList: PropTypes.func.isRequired,
+  receiveMsg: PropTypes.func.isRequired,
+  sendMsg: PropTypes.func.isRequired
 };
-const stateToProps = state => ({ messageReducer: state.messageReducer });
+const stateToProps = state => ({
+  msgList: state.messageReducer.msgList,
+  user: state.userReducer.user
+});
 
 const dispatchToProps = dispatch => ({
   getMsgList: () => {
     dispatch(messageAction.getMsgList());
+  },
+  sendMsg: text => {
+    dispatch(messageAction.sendMsg(text));
+  },
+  receiveMsg: () => {
+    dispatch(messageAction.receiveMsg());
   }
 });
 

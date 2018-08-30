@@ -6,8 +6,7 @@ import { Button } from "antd";
 
 import { messageAction } from "../../actions";
 import { NavBar } from "../global";
-
-const socket = io("ws://localhost:3200");
+import { getDirectMsgId } from "../../utils";
 
 class MyMessagePage extends React.Component {
   state = {
@@ -60,11 +59,13 @@ class MyMessagePage extends React.Component {
     const { text } = this.state;
 
     const { user, msgList, toUserInfo, error } = this.props;
+    const directMsgId = getDirectMsgId(user.id, toUserInfo.id);
+    const directMsgList = msgList.filter(msg => msg.chatId === directMsgId);
     return (
       <div>
         <NavBar />
         hi {user.username}! you are chating with user: {toUserInfo.username}
-        {msgList.map(
+        {directMsgList.map(
           (m, i) =>
             m.from === user.id ? (
               <p key={m._id + i} className="my-msg">

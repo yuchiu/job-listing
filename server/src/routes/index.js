@@ -15,6 +15,7 @@ const routes = app => {
   app.post("/auth/login", authController.login);
   app.post("/auth/update-profile", authController.updateProfile);
 
+  app.get("/user/info/:userId", userController.getUserInfo);
   app.post("/user/followup", userController.followUp);
 
   app.get("/message/getmsglist", authPolicy, messageController.getMsgList);

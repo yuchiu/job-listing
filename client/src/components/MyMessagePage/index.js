@@ -15,9 +15,22 @@ class MyMessagePage extends React.Component {
   };
 
   componentDidMount() {
-    const { getMsgList, receiveMsg } = this.props;
+    const {
+      getMsgList,
+      getToUserInfo,
+      receiveMsg,
+      match: {
+        params: { toUserId }
+      }
+    } = this.props;
+    getToUserInfo(toUserId);
     getMsgList();
     receiveMsg();
+  }
+
+  componentWillUnmount() {
+    const { clearMsgToUserInfo } = this.props;
+    clearMsgToUserInfo();
   }
 
   handleChange = e => {
@@ -46,28 +59,41 @@ class MyMessagePage extends React.Component {
   render() {
     const { text } = this.state;
 
-    const {
-      user,
-      msgList,
-      match: {
-        params: { toUserId }
-      }
-    } = this.props;
+    const { user, msgList, toUserInfo, error } = this.props;
     return (
       <div>
         <NavBar />
-        {user.id}
-        MyMessagePage page. chating with user: {toUserId}
+        hi {user.username}! you are chating with user: {toUserInfo.username}
         {msgList.map(
-          m =>
-            m._id === user.id ? (
-              <p key={m._id} className="my-msg">
+          (m, i) =>
+            m.from === user.id ? (
+              <p key={m._id + i} className="my-msg">
+                <img
+                  className="info-avatar"
+                  src={require(`../global/AvatarSelector/images/${
+                    user.avatar
+                  }.png`)}
+                  alt=""
+                />
                 Me: {m.content}
               </p>
             ) : (
-              <p key={m._id}>{m.content}</p>
+              <p key={m._id + i}>
+                {" "}
+                {toUserInfo.avatar && (
+                  <img
+                    className="info-avatar"
+                    src={require(`../global/AvatarSelector/images/${
+                      toUserInfo.avatar
+                    }.png`)}
+                    alt=""
+                  />
+                )}
+                {toUserInfo.username}: {m.content}
+              </p>
             )
         )}
+        <p>{error}</p>
         <textarea
           className="chat-textarea"
           onChange={this.handleChange}
@@ -95,11 +121,17 @@ MyMessagePage.propTypes = {
   msgList: PropTypes.array.isRequired,
   getMsgList: PropTypes.func.isRequired,
   receiveMsg: PropTypes.func.isRequired,
+  clearMsgToUserInfo: PropTypes.func.isRequired,
+  getToUserInfo: PropTypes.func.isRequired,
+  toUserInfo: PropTypes.object.isRequired,
+  error: PropTypes.string.isRequired,
   sendMsg: PropTypes.func.isRequired
 };
 const stateToProps = state => ({
   msgList: state.messageReducer.msgList,
-  user: state.userReducer.user
+  error: state.messageReducer.error,
+  user: state.userReducer.user,
+  toUserInfo: state.messageReducer.toUserInfo
 });
 
 const dispatchToProps = dispatch => ({
@@ -111,6 +143,12 @@ const dispatchToProps = dispatch => ({
   },
   receiveMsg: () => {
     dispatch(messageAction.receiveMsg());
+  },
+  clearMsgToUserInfo: () => {
+    dispatch(messageAction.clearMsgToUserInfo());
+  },
+  getToUserInfo: toUserId => {
+    dispatch(messageAction.getToUserInfo(toUserId));
   }
 });
 

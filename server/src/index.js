@@ -18,22 +18,27 @@ const io = socketIo(server);
 
 io.on("connection", socket => {
   console.log("socket io connected");
-  socket.on("sendMsg", data => {
+  socket.on("sendMsg", async data => {
     const { fromUserId, toUserId, text } = data;
     const chatId = [fromUserId, toUserId].sort().join("_");
-    console.log(chatId);
-    messageModel.create(
-      {
-        from: fromUserId,
-        chatid: chatId,
-        to: toUserId,
-        content: text
-      },
-      (err, doc) => {
-        console.log(doc);
-        io.emit("receiveMsg", Object.assign({}, doc._doc));
-      }
-    );
+    const msg = await messageModel.create({
+      from: fromUserId,
+      chatId,
+      to: toUserId,
+      content: text
+    });
+    io.emit("receiveMsg", msg);
+    // messageModel.create(
+    //   {
+    //     from: fromUserId,
+    //     chatid: chatId,
+    //     to: toUserId,
+    //     content: text
+    //   },
+    //   (err, doc) => {
+    //     io.emit("receiveMsg", Object.assign({}, doc._doc));
+    //   }
+    // );
   });
 });
 

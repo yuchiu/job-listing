@@ -25,6 +25,36 @@ const filterUserInfo = user => {
 };
 
 const userController = {
+  getUserInfo: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      // find user
+      const user = await userModel.findOne({
+        _id: userId
+      });
+      // if user does not exist
+      if (!user) {
+        return res.status(403).send({
+          confirmation: false,
+          user: {},
+          message: "user does not exist"
+        });
+      }
+
+      res.status(200).send({
+        confirmation: true,
+        user: userSummary(user)
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({
+        confirmation: false,
+        user: {},
+        message: "an error has occured trying to get user info"
+      });
+    }
+  },
+
   followUp: async (req, res) => {
     try {
       const credentials = req.body;
@@ -49,8 +79,7 @@ const userController = {
       );
       res.status(200).send({
         confirmation: true,
-        user: userSummary(updatedUser),
-        message: "updated follow up successfully"
+        user: userSummary(updatedUser)
       });
     } catch (err) {
       console.log(err);

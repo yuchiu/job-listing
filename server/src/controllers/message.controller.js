@@ -1,17 +1,16 @@
-import { messageModel } from "../models";
+import { messageModel, userModel } from "../models";
 
 const messageController = {
   getMsgList: async (req, res) => {
     try {
       // req.user is retreived from auth.policy
       const userId = req.user.id;
-      console.log("userId:");
-      console.log(userId);
-      const msgList = await messageModel.find();
+      const msgList = await messageModel.find({
+        $or: [{ from: userId }, { to: userId }]
+      });
       res.status(200).send({
         confirmation: true,
-        msgList,
-        message: "get message list success!"
+        msgList
       });
     } catch (err) {
       console.log(err);

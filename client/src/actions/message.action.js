@@ -1,13 +1,33 @@
 import io from "socket.io-client";
 import constants from "../constants";
-import { messageService } from "./services";
+import { messageService, authService } from "./services";
 
 const socket = io("ws://localhost:3200");
 
 const messageAction = {
-  sendMsg: msgInfo => dispatch => {
+  getToUserInfo: toUserId => async dispatch => {
+    try {
+      const response = await authService.getUserInfo(toUserId);
+      const { data } = response;
+      dispatch({
+        type: constants.UPDATE_TO_USER_INFO,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.MSG_ERROR,
+        payload: data
+      });
+    }
+  },
+  clearMsgToUserInfo: () => dispatch => {
+    dispatch({
+      type: constants.CLEAR_TO_USER_INFO
+    });
+  },
+  sendMsg: msgInfo => () => {
     socket.emit("sendMsg", msgInfo);
-    dispatch(messageAction.receiveMsg);
   },
   receiveMsg: () => dispatch => {
     socket.on("receiveMsg", data => {

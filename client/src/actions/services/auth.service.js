@@ -21,6 +21,10 @@ const authService = {
   followupUser: async followUpCredentials => {
     const payload = await API().post(`/user/followup`, followUpCredentials);
     return payload;
+  },
+  getUserInfo: async toUserId => {
+    const payload = await API().get(`/user/info/${toUserId}`);
+    return payload;
   }
 };
 

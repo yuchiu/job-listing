@@ -3,7 +3,8 @@ import constants from "../constants";
 const initialState = {
   msgList: [],
   unread: 0,
-  error: ""
+  error: "",
+  toUserInfo: {}
 };
 
 export default (state = initialState, action) => {
@@ -13,16 +14,22 @@ export default (state = initialState, action) => {
       newState.error = action.payload.message;
       return newState;
 
+    case constants.UPDATE_TO_USER_INFO:
+      newState.toUserInfo = action.payload.user;
+      return newState;
+
+    case constants.CLEAR_TO_USER_INFO:
+      newState.toUserInfo = {};
+      return newState;
+
     case constants.GET_MSG_LIST:
       newState.msgList = action.payload.msgList;
       newState.unread = action.payload.msgList.filter(m => !m.read).length;
-      newState.error = "";
       return newState;
 
     case constants.MSG_RECEIVED:
-      newState.msgList = newState.msgList
-        ? newState.msgList.concat(action.payload)
-        : action.payload.msgList;
+      newState.msgList = newState.msgList.concat(action.payload);
+      newState.unread = state.unread + 1;
       return newState;
 
     case constants.READ_MSG:

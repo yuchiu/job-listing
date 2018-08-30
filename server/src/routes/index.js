@@ -5,7 +5,7 @@ import {
   browseController,
   messageController
 } from "../controllers";
-import { registerPolicy, authPolicy } from "../policies";
+import { registerPolicy, authPolicy, browsePolicy } from "../policies";
 
 const routes = app => {
   app.get("/test", testController.getTest);
@@ -20,7 +20,7 @@ const routes = app => {
 
   app.get("/message/getmsglist", authPolicy, messageController.getMsgList);
 
-  app.get("/api/v1/browse-list", browseController.getBrowseList);
+  app.get("/api/v1/browse-list", browsePolicy, browseController.getBrowseList);
 };
 
 export default routes;

@@ -28,17 +28,6 @@ io.on("connection", socket => {
       content: text
     });
     io.emit("receiveMsg", msg);
-    // messageModel.create(
-    //   {
-    //     from: fromUserId,
-    //     chatid: chatId,
-    //     to: toUserId,
-    //     content: text
-    //   },
-    //   (err, doc) => {
-    //     io.emit("receiveMsg", Object.assign({}, doc._doc));
-    //   }
-    // );
   });
 });
 

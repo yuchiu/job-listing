@@ -3,7 +3,9 @@ import { userModel } from "../models";
 const browseController = {
   getBrowseList: async (req, res) => {
     try {
-      const browseList = await userModel.find();
+      // req.user is retreived from auth.policy
+      console.log(req.user);
+      const browseList = await userModel.find({ _id: { $ne: req.user._id } });
       res.status(200).send({
         confirmation: true,
         browseList

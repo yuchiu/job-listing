@@ -18,13 +18,19 @@ class MyMessagePage extends React.Component {
       getMsgList,
       getToUserInfo,
       receiveMsg,
+      msgList,
       match: {
         params: { toUserId }
       }
     } = this.props;
     getToUserInfo(toUserId);
+
     getMsgList();
-    receiveMsg();
+
+    // fetch data when the msg list is empty
+    if (!msgList.length) {
+      receiveMsg();
+    }
   }
 
   componentWillUnmount() {

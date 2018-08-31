@@ -16,7 +16,7 @@ class BrowsePage extends React.Component {
   handleClick = user => {
     const { history } = this.props;
     const { _id } = user;
-    history.push(`/my-message/${_id}`);
+    history.push(`/direct-message/${_id}`);
   };
 
   render() {

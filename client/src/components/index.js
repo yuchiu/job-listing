@@ -11,6 +11,7 @@ import RegisterPage from "./RegisterPage";
 import BossFollowUpPage from "./BossFollowUpPage";
 import GeniusFollowUpPage from "./GeniusFollowUpPage";
 import BrowsePage from "./BrowsePage";
+import DirectMessagePage from "./DirectMessagePage";
 import MyMessagePage from "./MyMessagePage";
 import MyProfilePage from "./MyProfilePage";
 import EditProfilePage from "./EditProfilePage";
@@ -75,8 +76,8 @@ class Router extends React.Component {
             />
             <AuthenticatedRoute
               exact
-              path="/my-message/:toUserId"
-              component={MyMessagePage}
+              path="/direct-message/:toUserId"
+              component={DirectMessagePage}
             />
             <AuthenticatedRoute
               exact

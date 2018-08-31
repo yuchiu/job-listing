@@ -32,7 +32,7 @@ class MyMessagePage extends React.Component {
       msgGroup[msg.chatId].push(msg);
     });
 
-    const directMessageUsersList = Object.values(msgGroup).sort((a, b) => {
+    const directMessageList = Object.values(msgGroup).sort((a, b) => {
       const aLast = this.getLast(a).timestamp;
       const bLast = this.getLast(b).timestamp;
       return aLast - bLast;
@@ -44,12 +44,11 @@ class MyMessagePage extends React.Component {
         <NavBar />
         my messages:
         <br />
-        {directMessageUsersList.map((dmUser, i) => {
-          const lastItem = this.getLast(dmUser);
-          console.log(dmUser);
-          const targetId = dmUser.from === userid ? dmUser.to : dmUser.from;
-          const dmUserInfo =
-            browseList.find(obj => obj.id === targetId) || null;
+        {directMessageList.map((dmMsg, i) => {
+          const lastItem = this.getLast(dmMsg);
+          const targetId =
+            lastItem.from === userid ? lastItem.to : lastItem.from;
+          const dmUserInfo = browseList.find(obj => obj._id === targetId);
           return (
             <div key={lastItem._id + i}>
               {dmUserInfo && (

@@ -27,30 +27,41 @@ class MyMessagePage extends React.Component {
   render() {
     const { msgList, user, browseList } = this.props;
     const msgGroup = {};
+
+    // go through the list and group the msg from same user into one msgGroup;
     msgList.forEach(msg => {
       msgGroup[msg.chatId] = msgGroup[msg.chatId] || [];
       msgGroup[msg.chatId].push(msg);
     });
 
+    // sort the msgGroup into list by ascending order of timestamp
     const directMessageList = Object.values(msgGroup).sort((a, b) => {
       const aLast = this.getLast(a).timestamp;
       const bLast = this.getLast(b).timestamp;
       return aLast - bLast;
     });
 
+    // current logged in user
     const userid = user.id;
     return (
       <div>
         <NavBar />
         my messages:
         <br />
+        {/* map out direct msg list */}
         {directMessageList.map((dmMsg, i) => {
-          const lastItem = this.getLast(dmMsg);
-          const targetId =
-            lastItem.from === userid ? lastItem.to : lastItem.from;
+          // get the most recent direct msg
+          const lastMsg = this.getLast(dmMsg);
+
+          // get the id of other user who sent msg to current logged in user
+          const targetId = lastMsg.from === userid ? lastMsg.to : lastMsg.from;
+
+          // get the target user's info by iterating the user list using target id
           const dmUserInfo = browseList.find(obj => obj._id === targetId);
+
+          // display target user's info and most recent direct msg
           return (
-            <div key={lastItem._id + i}>
+            <div key={lastMsg._id + i}>
               {dmUserInfo && (
                 <div>
                   <img
@@ -61,7 +72,7 @@ class MyMessagePage extends React.Component {
                     alt=""
                   />
                   <b>{dmUserInfo.username}</b>
-                  <p>{lastItem.content}</p>
+                  <p>{lastMsg.content}</p>
                 </div>
               )}
             </div>

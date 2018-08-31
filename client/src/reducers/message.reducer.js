@@ -24,12 +24,18 @@ export default (state = initialState, action) => {
 
     case constants.GET_MSG_LIST:
       newState.msgList = action.payload.msgList;
-      newState.unread = action.payload.msgList.filter(m => !m.read).length;
+      newState.unread = action.payload.msgList.filter(
+        msg => !msg.read && msg.to === action.payload.reqUserId
+      ).length;
       return newState;
 
     case constants.MSG_RECEIVED:
-      newState.msgList = newState.msgList.concat(action.payload);
-      newState.unread = state.unread + 1;
+      newState.msgList = newState.msgList.concat(action.payload.msg);
+      if (action.payload.to === action.payload.reqUserId) {
+        newState.unread = state.unread + 1;
+      } else {
+        newState.unread = state.unread + 0;
+      }
       return newState;
 
     case constants.READ_MSG:

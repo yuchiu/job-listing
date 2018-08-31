@@ -4,12 +4,13 @@ const messageController = {
   getMsgList: async (req, res) => {
     try {
       // req.user is retreived from auth.policy
-      const userId = req.user.id;
+      const reqUserId = req.user.id;
       const msgList = await messageModel.find({
-        $or: [{ from: userId }, { to: userId }]
+        $or: [{ from: reqUserId }, { to: reqUserId }]
       });
       res.status(200).send({
         confirmation: true,
+        reqUserId,
         msgList
       });
     } catch (err) {

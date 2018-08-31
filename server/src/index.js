@@ -27,7 +27,11 @@ io.on("connection", socket => {
       to: toUserId,
       content: text
     });
-    io.emit("receiveMsg", msg);
+    const msgInfo = {
+      msg,
+      reqUserId: fromUserId
+    };
+    io.emit("receiveMsg", msgInfo);
   });
 });
 

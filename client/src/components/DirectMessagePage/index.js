@@ -1,10 +1,9 @@
 import React from "react";
-import io from "socket.io-client";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button } from "antd";
 
-import { messageAction } from "../../actions";
+import { messageAction, browseAction } from "../../actions";
 import { NavBar } from "../global";
 import { getDirectMsgId } from "../../utils";
 
@@ -19,6 +18,8 @@ class DirectMessagePage extends React.Component {
       getToUserInfo,
       receiveMsg,
       msgList,
+      subToMsg,
+      isSubToMsg,
       match: {
         params: { toUserId }
       }
@@ -26,15 +27,19 @@ class DirectMessagePage extends React.Component {
     getToUserInfo(toUserId);
 
     getMsgList();
+
+    subToMsg();
     // listen to receive msg only once when the msg list is empty initially.
-    if (!msgList.length) {
+    if (isSubToMsg) {
       receiveMsg();
     }
   }
 
   componentWillUnmount() {
-    const { clearMsgToUserInfo } = this.props;
+    const { clearMsgToUserInfo, clearList, unSubToMsg } = this.props;
     clearMsgToUserInfo();
+    clearList();
+    unSubToMsg();
   }
 
   handleChange = e => {
@@ -131,11 +136,16 @@ DirectMessagePage.propTypes = {
   getToUserInfo: PropTypes.func.isRequired,
   toUserInfo: PropTypes.object.isRequired,
   error: PropTypes.string.isRequired,
+  clearList: PropTypes.func.isRequired,
+  subToMsg: PropTypes.func.isRequired,
+  unSubToMsg: PropTypes.func.isRequired,
+  isSubToMsg: PropTypes.bool.isRequired,
   sendMsg: PropTypes.func.isRequired
 };
 const stateToProps = state => ({
   msgList: state.messageReducer.msgList,
   error: state.messageReducer.error,
+  isSubToMsg: state.messageReducer.isSubToMsg,
   user: state.userReducer.user,
   toUserInfo: state.messageReducer.toUserInfo
 });
@@ -147,6 +157,15 @@ const dispatchToProps = dispatch => ({
   sendMsg: text => {
     dispatch(messageAction.sendMsg(text));
   },
+
+  subToMsg: () => {
+    dispatch(messageAction.subToMsg());
+  },
+
+  unSubToMsg: () => {
+    dispatch(messageAction.unSubToMsg());
+  },
+
   receiveMsg: () => {
     dispatch(messageAction.receiveMsg());
   },
@@ -155,6 +174,9 @@ const dispatchToProps = dispatch => ({
   },
   getToUserInfo: toUserId => {
     dispatch(messageAction.getToUserInfo(toUserId));
+  },
+  clearList: () => {
+    dispatch(browseAction.clearList());
   }
 });
 

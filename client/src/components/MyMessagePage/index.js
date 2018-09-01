@@ -49,7 +49,7 @@ class MyMessagePage extends React.Component {
     const directMessageList = Object.values(msgGroup).sort((a, b) => {
       const aLast = this.getLast(a).timestamp;
       const bLast = this.getLast(b).timestamp;
-      return aLast - bLast;
+      return bLast - aLast;
     });
 
     // current logged in user

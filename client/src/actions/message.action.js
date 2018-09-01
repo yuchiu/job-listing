@@ -26,6 +26,16 @@ const messageAction = {
       type: constants.CLEAR_TO_USER_INFO
     });
   },
+  subToMsg: () => dispatch => {
+    dispatch({
+      type: constants.SUB_TO_MSG
+    });
+  },
+  unSubToMsg: () => dispatch => {
+    dispatch({
+      type: constants.UNSUB_TO_MSG
+    });
+  },
   sendMsg: msgInfo => () => {
     socket.emit("sendMsg", msgInfo);
   },

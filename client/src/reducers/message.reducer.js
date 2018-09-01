@@ -4,7 +4,8 @@ const initialState = {
   msgList: [],
   unread: 0,
   error: "",
-  toUserInfo: {}
+  toUserInfo: {},
+  isSubToMsg: true
 };
 
 export default (state = initialState, action) => {
@@ -18,8 +19,16 @@ export default (state = initialState, action) => {
       newState.toUserInfo = action.payload.user;
       return newState;
 
-    case constants.CLEAR_TO_USER_INFO:
+    case constants.SUB_TO_MSG:
       newState.toUserInfo = {};
+      return newState;
+
+    case constants.CLEAR_TO_USER_INFO:
+      newState.isSubToMsg = false;
+      return newState;
+
+    case constants.UNSUB_TO_MSG:
+      newState.toUserInfo = true;
       return newState;
 
     case constants.GET_MSG_LIST:

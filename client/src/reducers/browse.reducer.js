@@ -10,7 +10,9 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.FETCH_LIST:
       newState.browseList = action.payload.browseList;
-      newState.message = action.payload.message;
+      return newState;
+    case constants.CLEAR_LIST:
+      newState.browseList = [];
       return newState;
     default:
       return state;

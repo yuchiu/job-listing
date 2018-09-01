@@ -26,8 +26,7 @@ class DirectMessagePage extends React.Component {
     getToUserInfo(toUserId);
 
     getMsgList();
-
-    // fetch data when the msg list is empty
+    // listen to receive msg only once when the msg list is empty initially.
     if (!msgList.length) {
       receiveMsg();
     }

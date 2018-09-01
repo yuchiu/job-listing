@@ -8,6 +8,11 @@ const browseAction = {
       type: constants.FETCH_LIST,
       payload: response.data
     });
+  },
+  clearList: () => async dispatch => {
+    dispatch({
+      type: constants.CLEAR_LIST
+    });
   }
 };
 

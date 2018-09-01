@@ -25,6 +25,11 @@ class MyMessagePage extends React.Component {
     return null;
   }
 
+  componentWillUnmount() {
+    const { clearList } = this.props;
+    clearList();
+  }
+
   handleClick = id => {
     const { history } = this.props;
     history.push(`/direct-message/${id}`);
@@ -108,6 +113,7 @@ MyMessagePage.propTypes = {
   browseList: PropTypes.array.isRequired,
   toUserInfo: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  clearList: PropTypes.func.isRequired,
   msgList: PropTypes.array.isRequired
 };
 const stateToProps = state => ({
@@ -119,6 +125,9 @@ const stateToProps = state => ({
 const dispatchToProps = dispatch => ({
   fetchList: () => {
     dispatch(browseAction.fetchList());
+  },
+  clearList: () => {
+    dispatch(browseAction.clearList());
   }
 });
 

@@ -78,8 +78,7 @@ const authAction = {
   },
   logout: () => dispatch => {
     dispatch({
-      type: constants.LOGOUT,
-      payload: null
+      type: constants.LOGOUT
     });
   }
 };

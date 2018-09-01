@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Icon, Badge } from "antd";
 
 import { browseAction } from "../../actions";
 import { NavBar } from "../global";
@@ -23,6 +24,11 @@ class MyMessagePage extends React.Component {
     }
     return null;
   }
+
+  handleClick = id => {
+    const { history } = this.props;
+    history.push(`/direct-message/${id}`);
+  };
 
   render() {
     const { msgList, user, browseList } = this.props;
@@ -59,6 +65,11 @@ class MyMessagePage extends React.Component {
           // get the target user's info by iterating the user list using target id
           const dmUserInfo = browseList.find(obj => obj._id === targetId);
 
+          // filter out unread msg
+          const unreadNum = dmMsg.filter(
+            unreadMsg => !unreadMsg.read && unreadMsg.to === userid
+          ).length;
+
           // display target user's info and most recent direct msg
           return (
             <div key={lastMsg._id + i}>
@@ -71,8 +82,16 @@ class MyMessagePage extends React.Component {
                     }.png`)}
                     alt=""
                   />
+                  <br />
                   <b>{dmUserInfo.username}</b>
+                  <Badge count={unreadNum} />
                   <p>{lastMsg.content}</p>
+                  <a
+                    className="user-char-chat-with-p"
+                    onClick={() => this.handleClick(dmUserInfo._id)}
+                  >
+                    <Icon type="message" /> Chat
+                  </a>
                 </div>
               )}
             </div>
@@ -88,6 +107,7 @@ MyMessagePage.propTypes = {
   user: PropTypes.object.isRequired,
   browseList: PropTypes.array.isRequired,
   toUserInfo: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   msgList: PropTypes.array.isRequired
 };
 const stateToProps = state => ({

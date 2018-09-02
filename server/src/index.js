@@ -51,7 +51,7 @@ server.listen(config.PORT, () => {
 
 /* database setting */
 mongoose.connect(
-  config.DB_LOCAL,
+  config.DB_CLOUD,
   { useNewUrlParser: true },
   err => {
     if (err) {

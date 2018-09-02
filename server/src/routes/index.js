@@ -19,6 +19,7 @@ const routes = app => {
   app.post("/user/followup", userController.followUp);
 
   app.get("/message/getmsglist", authPolicy, messageController.getMsgList);
+  app.post("/message/read", authPolicy, messageController.readMsg);
 
   app.get("/api/v1/browse-list", browsePolicy, browseController.getBrowseList);
 };

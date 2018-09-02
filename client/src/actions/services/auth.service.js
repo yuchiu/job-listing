@@ -2,29 +2,29 @@ import API from "./API";
 
 const authService = {
   autoLogin: async () => {
-    const payload = await API().get(`/auth/auto-login`);
-    return payload;
+    const response = await API().get(`/auth/auto-login`);
+    return response;
   },
   registerUser: async credentials => {
-    const payload = await API().post(`/auth/register`, credentials);
-    return payload;
+    const response = await API().post(`/auth/register`, credentials);
+    return response;
   },
 
   loginUser: async credentials => {
-    const payload = await API().post(`/auth/login`, credentials);
-    return payload;
+    const response = await API().post(`/auth/login`, credentials);
+    return response;
   },
   editProfileRequest: async credentials => {
-    const payload = await API().post(`/auth/update-profile`, credentials);
-    return payload;
+    const response = await API().post(`/auth/update-profile`, credentials);
+    return response;
   },
   followupUser: async followUpCredentials => {
-    const payload = await API().post(`/user/followup`, followUpCredentials);
-    return payload;
+    const response = await API().post(`/user/followup`, followUpCredentials);
+    return response;
   },
   getUserInfo: async toUserId => {
-    const payload = await API().get(`/user/info/${toUserId}`);
-    return payload;
+    const response = await API().get(`/user/info/${toUserId}`);
+    return response;
   }
 };
 

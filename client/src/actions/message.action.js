@@ -26,6 +26,22 @@ const messageAction = {
       type: constants.CLEAR_TO_USER_INFO
     });
   },
+  readMsg: targetUserId => async dispatch => {
+    try {
+      const response = await messageService.readMsg(targetUserId);
+      const { data } = response;
+      dispatch({
+        type: constants.READ_MSG,
+        payload: data
+      });
+    } catch (err) {
+      const { data } = err.response;
+      dispatch({
+        type: constants.MSG_ERROR,
+        payload: data
+      });
+    }
+  },
   subToMsg: () => dispatch => {
     dispatch({
       type: constants.SUB_TO_MSG

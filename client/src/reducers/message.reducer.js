@@ -19,6 +19,12 @@ export default (state = initialState, action) => {
       newState.toUserInfo = action.payload.user;
       return newState;
 
+    case constants.READ_MSG:
+      newState.msgList = action.payload.msgList;
+      newState.unread = action.payload.msgList.filter(
+        msg => !msg.read && msg.to === action.payload.reqUserId
+      ).length;
+      return newState;
     case constants.SUB_TO_MSG:
       newState.toUserInfo = {};
       return newState;
@@ -45,10 +51,6 @@ export default (state = initialState, action) => {
       } else {
         newState.unread = state.unread + 0;
       }
-      return newState;
-
-    case constants.READ_MSG:
-      newState.browseList = action.payload.browseList;
       return newState;
 
     default:

@@ -19,16 +19,21 @@ class DirectMessagePage extends React.Component {
       receiveMsg,
       msgList,
       subToMsg,
+      readMsg,
       isSubToMsg,
       match: {
         params: { toUserId }
       }
     } = this.props;
+
     getToUserInfo(toUserId);
 
     getMsgList();
 
     subToMsg();
+
+    readMsg({ targetUserId: toUserId });
+
     // listen to receive msg only once when the msg list is empty initially.
     if (isSubToMsg) {
       receiveMsg();
@@ -139,6 +144,7 @@ DirectMessagePage.propTypes = {
   clearList: PropTypes.func.isRequired,
   subToMsg: PropTypes.func.isRequired,
   unSubToMsg: PropTypes.func.isRequired,
+  readMsg: PropTypes.func.isRequired,
   isSubToMsg: PropTypes.bool.isRequired,
   sendMsg: PropTypes.func.isRequired
 };
@@ -153,6 +159,9 @@ const stateToProps = state => ({
 const dispatchToProps = dispatch => ({
   getMsgList: () => {
     dispatch(messageAction.getMsgList());
+  },
+  readMsg: targetUserId => {
+    dispatch(messageAction.readMsg(targetUserId));
   },
   sendMsg: text => {
     dispatch(messageAction.sendMsg(text));
@@ -172,8 +181,8 @@ const dispatchToProps = dispatch => ({
   clearMsgToUserInfo: () => {
     dispatch(messageAction.clearMsgToUserInfo());
   },
-  getToUserInfo: toUserId => {
-    dispatch(messageAction.getToUserInfo(toUserId));
+  getToUserInfo: toFromUserId => {
+    dispatch(messageAction.getToUserInfo(toFromUserId));
   },
   clearList: () => {
     dispatch(browseAction.clearList());

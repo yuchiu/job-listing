@@ -25,11 +25,6 @@ class MyMessagePage extends React.Component {
     return null;
   }
 
-  componentWillUnmount() {
-    const { clearList } = this.props;
-    clearList();
-  }
-
   handleClick = id => {
     const { history } = this.props;
     history.push(`/direct-message/${id}`);
@@ -46,11 +41,13 @@ class MyMessagePage extends React.Component {
     });
 
     // sort the msgGroup into list by ascending order of timestamp
-    const directMessageList = Object.values(msgGroup).sort((a, b) => {
-      const aLast = this.getLast(a).timestamp;
-      const bLast = this.getLast(b).timestamp;
-      return bLast - aLast;
-    });
+    const directMessageList = Object.values(msgGroup)
+      .sort((a, b) => {
+        const aLast = this.getLast(a).timestamp;
+        const bLast = this.getLast(b).timestamp;
+        return aLast - bLast;
+      })
+      .reverse();
 
     // current logged in user
     const userid = user.id;
@@ -111,23 +108,17 @@ MyMessagePage.propTypes = {
   fetchList: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   browseList: PropTypes.array.isRequired,
-  toUserInfo: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  clearList: PropTypes.func.isRequired,
   msgList: PropTypes.array.isRequired
 };
 const stateToProps = state => ({
   msgList: state.messageReducer.msgList,
   user: state.userReducer.user,
-  browseList: state.browseReducer.browseList,
-  toUserInfo: state.messageReducer.toUserInfo
+  browseList: state.browseReducer.browseList
 });
 const dispatchToProps = dispatch => ({
   fetchList: () => {
     dispatch(browseAction.fetchList());
-  },
-  clearList: () => {
-    dispatch(browseAction.clearList());
   }
 });
 

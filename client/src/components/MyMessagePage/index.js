@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Icon, Badge } from "antd";
 
+import "./index.scss";
 import { browseAction } from "../../actions";
 import { NavBar } from "../global";
+import { Msg } from "./presentations";
 
 class MyMessagePage extends React.Component {
   componentDidMount() {
@@ -14,15 +15,6 @@ class MyMessagePage extends React.Component {
 
   getLast(arr) {
     return arr[arr.length - 1];
-  }
-
-  findObjectByKey(array, key, value) {
-    for (let i = 0; i < array.length; i + 1) {
-      if (array[i][key] === value) {
-        return array[i];
-      }
-    }
-    return null;
   }
 
   handleClick = id => {
@@ -54,51 +46,36 @@ class MyMessagePage extends React.Component {
     return (
       <div>
         <NavBar />
-        my messages:
-        <br />
-        {/* map out direct msg list */}
-        {directMessageList.map((dmMsg, i) => {
-          // get the most recent direct msg
-          const lastMsg = this.getLast(dmMsg);
+        <div className="msg-container">
+          {/* map out direct msg list */}
+          {directMessageList.map((dmMsg, i) => {
+            // get the most recent direct msg
+            const lastMsg = this.getLast(dmMsg);
 
-          // get the id of other user who sent msg to current logged in user
-          const targetId = lastMsg.from === userid ? lastMsg.to : lastMsg.from;
+            // get the id of other user who sent msg to current logged in user
+            const targetId =
+              lastMsg.from === userid ? lastMsg.to : lastMsg.from;
 
-          // get the target user's info by iterating the user list using target id
-          const dmUserInfo = browseList.find(obj => obj._id === targetId);
+            // get the target user's info by iterating the user list using target id
+            const dmUserInfo = browseList.find(obj => obj._id === targetId);
 
-          // filter out unread msg
-          const unreadNum = dmMsg.filter(
-            unreadMsg => !unreadMsg.read && unreadMsg.to === userid
-          ).length;
+            // filter out unread msg
+            const unreadNum = dmMsg.filter(
+              unreadMsg => !unreadMsg.read && unreadMsg.to === userid
+            ).length;
 
-          // display target user's info and most recent direct msg
-          return (
-            <div key={lastMsg._id + i}>
-              {dmUserInfo && (
-                <div>
-                  <img
-                    className="info-avatar"
-                    src={require(`../global/AvatarSelector/images/${
-                      dmUserInfo.avatar
-                    }.png`)}
-                    alt=""
-                  />
-                  <br />
-                  <b>{dmUserInfo.username}</b>
-                  <Badge count={unreadNum} />
-                  <p>{lastMsg.content}</p>
-                  <a
-                    className="user-char-chat-with-p"
-                    onClick={() => this.handleClick(dmUserInfo._id)}
-                  >
-                    <Icon type="message" /> Chat
-                  </a>
-                </div>
-              )}
-            </div>
-          );
-        })}
+            // display target user's info and most recent direct msg
+            return (
+              <Msg
+                key={lastMsg._id + i}
+                lastMsg={lastMsg}
+                dmUserInfo={dmUserInfo}
+                unreadNum={unreadNum}
+                handleClick={this.handleClick}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }

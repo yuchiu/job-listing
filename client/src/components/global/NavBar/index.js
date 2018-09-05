@@ -46,12 +46,12 @@ class NavBar extends React.Component {
                   Job Hunting
                 </Link>
               </Menu.Item>
-              <Menu.Item key="browse">
+              {/* <Menu.Item key="browse">
                 <Link to="/browse">
                   <Icon type="bars" />
                   Browse
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="message">
                 <Link to="/my-message">
                   <Icon type="message" />
@@ -96,18 +96,18 @@ class NavBar extends React.Component {
                 Job Hunting
               </Link>
             </Menu.Item>
-            <Menu.Item key="browse">
+            {/* <Menu.Item key="browse">
               <Link to="/browse">
                 <Icon type="bars" />
                 Browse
               </Link>
-            </Menu.Item>
-            <Menu.Item key="testing">
+            </Menu.Item> */}
+            {/* <Menu.Item key="testing">
               <Link to="/testing">
                 <Icon type="appstore" />
                 testing
-              </Link>
-            </Menu.Item>
+              </Link> 
+            </Menu.Item> */}
             <Menu.Item style={{ float: "right" }}>
               <Link to="/register">
                 <Icon type="user-add" />

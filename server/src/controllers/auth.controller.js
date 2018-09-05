@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { userModel } from "../models";
+import { userModel, messageModel } from "../models";
 
 import config from "../../config";
 
@@ -73,6 +73,16 @@ const authController = {
       // hash password & create user
       credentials.password = bcrypt.hashSync(credentials.password, 10);
       const user = await userModel.create(credentials);
+
+      // create a greeting message once user registered
+      const chatId = ["5b8f4bf1e8009f6eb1bcccb4", user._id].sort().join("_");
+      messageModel.create({
+        from: "5b8f4bf1e8009f6eb1bcccb4",
+        chatId,
+        to: user._id,
+        content: `Welcome ${user.username}! have fun!`
+      });
+
       res.status(200).send({
         confirmation: true,
         user: userSummary(user),

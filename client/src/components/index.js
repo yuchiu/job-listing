@@ -54,7 +54,7 @@ class Router extends React.Component {
           {/* auto log in user if auth info exist */}
           <AutoLogin />
           <Switch>
-            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/" component={BrowsePage} />
             <Route exact path="/browse" component={BrowsePage} />
             <Route exact path="/testing" component={TestingPage} />
             <Route exact path="/register" component={RegisterPage} />

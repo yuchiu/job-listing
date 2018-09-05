@@ -6,6 +6,14 @@ import Moment from "react-moment";
 class Msg extends React.Component {
   render() {
     const { lastMsg, dmUserInfo, unreadNum, handleClick } = this.props;
+    let sender;
+    if (dmUserInfo) {
+      if (lastMsg.from === dmUserInfo._id) {
+        sender = dmUserInfo.username;
+      } else {
+        sender = "me";
+      }
+    }
     return (
       <div>
         {dmUserInfo && (
@@ -24,7 +32,7 @@ class Msg extends React.Component {
               <br />
               <Moment format="MMM D, YYYY" date={lastMsg.timestamp} />
               <br />
-              {lastMsg.content}
+              {sender}: {lastMsg.content}
             </p>
             <span>
               <Badge count={unreadNum} />

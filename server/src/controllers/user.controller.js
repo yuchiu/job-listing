@@ -1,5 +1,19 @@
+import jwt from "jsonwebtoken";
 import { userModel } from "../models";
 
+import config from "../../config";
+
+const jwtSignUser = user => {
+  try {
+    const userJson = user.toJSON();
+    const ONE_WEEK = 60 * 60 * 24 * 7;
+    return jwt.sign(userJson, config.JWT_SECRET, {
+      expiresIn: ONE_WEEK
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 const userSummary = user => {
   const summary = {
     id: user._id.toString(),
@@ -79,7 +93,8 @@ const userController = {
       );
       res.status(200).send({
         confirmation: true,
-        user: userSummary(updatedUser)
+        user: userSummary(updatedUser),
+        token: jwtSignUser(user)
       });
     } catch (err) {
       console.log(err);

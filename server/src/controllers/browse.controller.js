@@ -5,7 +5,14 @@ const browseController = {
     try {
       // req.user is retreived from auth.policy
       console.log(req.user);
-      const browseList = await userModel.find({ _id: { $ne: req.user._id } });
+      if (req.user) {
+        const browseList = await userModel.find({ _id: { $ne: req.user._id } });
+        res.status(200).send({
+          confirmation: true,
+          browseList
+        });
+      }
+      const browseList = await userModel.find();
       res.status(200).send({
         confirmation: true,
         browseList

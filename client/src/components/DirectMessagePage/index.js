@@ -105,7 +105,7 @@ class DirectMessagePage extends React.Component {
               )
           )}
         </div>
-        <InlineError text={error} />
+        {/* <InlineError text={error} /> */}
         <InputArea
           text={text}
           handleChange={this.handleChange}
